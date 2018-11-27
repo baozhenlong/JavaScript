@@ -123,3 +123,146 @@ console.log(Math.pow(2, 1024)); //Infinity
 //场景2---非0数值除以0，得到Infinity
 console.log(0 / 0); //NaN
 console.log(1 / 0); //Infinity
+//Infinity有正负之分，Infinity表示正的无穷，-Infinity表示负的无穷
+//Infinity>一切数值(除了NaN)；-Infinity<一切数值(除了NaN)
+console.log(Infinity === -Infinity); //false
+console.log(1 / -0); //-Infinity
+console.log(-1 / -0); //Infinity
+console.log(-1 / 0); //-Infinity
+//Infinity和NaN比较，总是返回false
+//4.3.2---运算规则
+//Infinity的四则运算，符合无穷的数学计算规则
+console.log("[有限数]---", 5 * Infinity); //Infinity
+console.log("[有限数]---", 5 - Infinity); //-Infinity
+console.log("[有限数]---", 5 / Infinity); //0
+console.log("[有限数]---", Infinity / 5); //Infinity
+console.log("[0]---", 0 * Infinity); //NaN
+console.log("[0]---", 0 / Infinity); //0
+console.log("[0]---", Infinity / 0); //Infinity
+console.log("[0]---", -Infinity / 0); //-Infinity
+console.log("[Infinity]---", Infinity + Infinity); //Infinity
+console.log("[Infinity]---", Infinity * Infinity); //Infinity
+console.log("[Infinity]---", Infinity - Infinity); //NaN
+console.log("[Infinity]---", Infinity / Infinity); //NaN
+//Infinity与null计算时，null会转成0，等同于与0的计算
+console.log("[null]---", null * Infinity); //NaN
+console.log("[null]---", null / Infinity); //0
+console.log("[null]---", Infinity / null); //Infinity
+//Infinity与undefined计算，返回的都是NaN
+
+//5---与数值相关的全局方法
+//5.1---parseInt()
+//5.1.1---基本用法
+//parseInt方法用于将字符串转为整数
+console.log("[parseInt]---基本用法= ", parseInt("123")); //123
+//如果字符串头部有空格 ，空格会被自动去除
+console.log("[parseInt]---基本用法= ", parseInt("   81")); //81
+//如果parseInt的参数不是字符串，则会先转为字符串在转换
+console.log("[parseInt]---基本用法= ", parseInt(1.23)); //1
+//等价于
+console.log("[parseInt]---基本用法= ", parseInt("1.23")); //1
+//字符串转为整数的时候，是一个个字符依次转换，如果遇到不能转为数字的字符，就不再进行下去，返回已经转好的部分
+console.log("[parseInt]---基本用法= ", parseInt("8a")); //8
+console.log("[parseInt]---基本用法= ", parseInt("12**")); //12
+console.log("[parseInt]---基本用法= ", parseInt("12.34")); //12
+console.log("[parseInt]---基本用法= ", parseInt("15e2")); //15
+console.log("[parseInt]---基本用法= ", parseInt("15px")); //15
+//如果字符串的第一个字符不能转为数字(后面跟着数字的正负号除外)，返回NaN
+console.log("[parseInt]---基本用法= ", parseInt("abc")); //NaN
+console.log("[parseInt]---基本用法= ", parseInt(".3")); //NaN
+console.log("[parseInt]---基本用法= ", parseInt("")); //NaN
+console.log("[parseInt]---基本用法= ", parseInt("+")); //NaN
+console.log("[parseInt]---基本用法= ", parseInt("+1")); //1
+//如果字符串以0x或0X开头，将其按照十六进制解析
+console.log("[parseInt]---基本用法= ", parseInt("0x10")); //16
+//如果字符串以0开头，将其按照十进制解析
+console.log("[parseInt]---基本用法= ", parseInt("011")); //11
+//parseInt会将科学计数法的表示方法视为字符串，因此导致一些奇怪的结果
+console.log("[parseInt]---基本用法= ", parseInt("1000000000000000000000.5")); //1e+21???
+console.log("[parseInt]---基本用法= ", parseInt("1e+21")); //1
+console.log("[parseInt]---基本用法= ", parseInt("0.00000008")); //0???
+console.log("[parseInt]---基本用法= ", parseInt("8e-7")); //8
+//5.1.2---进制转换
+//parseInt方法还可以接受第2个参数([2,36])；表示被解析的值的进制，返回该值对应的十进制数
+//默认情况下，parseInt的第2个参数为10，即默认十进制转十进制
+console.log("[parseInt]---进制转换= ", parseInt("1000")); //1000
+//等价于
+console.log("[parseInt]---进制转换= ", parseInt("1000", 10)); //1000
+//指定进制
+console.log("[parseInt]---进制转换= ", parseInt("1000", 2)); //8
+console.log("[parseInt]---进制转换= ", parseInt("1000", 6)); //246
+console.log("[parseInt]---进制转换= ", parseInt("1000", 8)); //512
+//如果第2个参数不是数值，会自动转为一个整数；这个整数只有在2到36之间，才能得到有意义的结果，超出这个范围，则返回NaN
+//如果第2个参数是0、undefined、null，则直接忽略
+console.log("[parseInt]---进制转换= ", parseInt("10", 1)); //NaN
+console.log("[parseInt]---进制转换= ", parseInt("10", 37)); //NaN
+console.log("[parseInt]---进制转换= ", parseInt("10", 0)); //10
+console.log("[parseInt]---进制转换= ", parseInt("10", null)); //10
+console.log("[parseInt]---进制转换= ", parseInt("10", undefined)); //10
+//如果字符串包含对于指定进制无意义的字符，则从最高位开始，只返回可以转换的数值；如果最高位无法转换，则直接返回NaN
+console.log("[parseInt]---进制转换= ", parseInt("1546", 2)); //1
+console.log("[parseInt]---进制转换= ", parseInt("546", 2)); //NaN
+//5.2---parseFloat()
+//parseFloat()用于将一个字符串转为浮点数
+console.log("[parseFloat]---= ", parseFloat("3.14")); //3.14
+//如果字符串符合科学计数法，则会进行相应的转换
+console.log("[parseFloat]---= ", parseFloat("314e-2")); //3.14
+console.log("[parseFloat]---= ", parseFloat("0.0314E+2")); //3.14
+//如果字符串包含不能转为浮点数的字符，则不进行往后转换，返回已经转好的部分
+console.log("[parseFloat]---= ", parseFloat("3.14more")); //3.14
+//parseFloat会自动过滤字符串前导的空格
+console.log("[parseFloat]---= ", parseFloat("\t\v\r12.34\n")); //12.14
+//如果参数不是字符串，或者字符串的第一个字符不能转化为浮点数，则返回NaN
+console.log("[parseFloat]---= ", parseFloat("[]")); //NaN
+console.log("[parseFloat]---= ", parseFloat("ff2")); //NaN
+console.log("[parseFloat]---= ", parseFloat("")); //NaN
+//这些特点使得parseFloat的转换结果不同于Number函数
+console.log("[parseFloat]---= ", parseFloat(true)); //NaN
+console.log("[Number]---= ", Number(true)); //1
+console.log("[parseFloat]---= ", parseFloat(null)); //NaN
+console.log("[Number]---= ", Number(null)); //0
+console.log("[parseFloat]---= ", parseFloat("")); //NaN
+console.log("[Number]---= ", Number("")); //0
+console.log("[parseFloat]---= ", parseFloat("123.45#")); //123.45
+console.log("[Number]---= ", Number("123.45#")); //NaN
+//5.3---isNaN()
+//isNaN方法可以用来判断一个值是否为NaN
+console.log("[isNaN]---= ", isNaN("NaN")); //true
+console.log("[isNaN]---= ", isNaN(123)); //false
+//但是，isNaN只对数值有效，如果传入其他值，会被先转成数值
+//比如，传入字符串的时候，字符串会被先转成NaN，所以最后返回true
+//isNaN为true的值，有可能不是NaN，而是一个字符串
+console.log("[isNaN]---= ", isNaN("hi")); //true
+//等价于
+console.log("[isNaN]---= ", isNaN(Number("hi"))); //true
+//出于同样的原因，对于对象和数组，isNaN也返回true
+console.log("[isNaN]---= ", isNaN({})); //true
+//等价于
+console.log("[isNaN]---= ", isNaN(Number({}))); //true
+console.log("[isNaN]---= ", isNaN(["xyz"])); //true
+//等价于
+console.log("[isNaN]---= ", isNaN(Number(["xyz"]))); //true
+//但是对于空数组和只有一个数值成员的数组，isNaN返回false
+console.log("[isNaN]---= ", isNaN([])); //false
+console.log("[isNaN]---= ", isNaN([123])); //false
+console.log("[isNaN]---= ", isNaN(["123"])); //false
+//这些数组能被Number函数转成数值
+//因此使用isNaN之前，最好判断一下数据类型
+function my_is_NaN(value) {
+    return typeof value === "number" && isNaN(value);
+}
+//判断NaN更可靠的方法是，利用NaN为唯一不等于自身的值的这个特点，进行判断
+function my_is_NaN_better(value) {
+    return value !== value;
+}
+//5.4---isFinite()
+//isFinite方法返回一个布尔值，表示某个值是否为正常的数值
+console.log("[isFinite]---= ", isFinite(Infinity)); //false
+console.log("[isFinite]---= ", isFinite(-Infinity)); //false
+console.log("[isFinite]---= ", isFinite(NaN)); //false
+console.log("[isFinite]---= ", isFinite(undefined)); //false
+console.log("[isFinite]---= ", isFinite(null)); //true
+console.log("[isFinite]---= ", isFinite(-1)); //true
+//除了Infinity、-Infinity、NaN、undefined这几个值会返回false。isFinite对于其他的数值都会返回true
+console.log("[isFinite]---= ", isFinite("1")); //true
+console.log("[isFinite]---= ", isFinite("x")); //false
