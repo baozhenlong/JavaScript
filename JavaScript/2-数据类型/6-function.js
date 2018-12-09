@@ -113,16 +113,172 @@
     //由于函数与其他数据类型地位平等，所以在JavaScript语言中又称函数第一等公民
 }
 //1.5---函数名的提升
+{
+    //JavaScript引擎将函数名视同变量名
+    //所以采用function命令声明函数时，整个函数会像变量声明一样，被提升到代码头部
+    f();
+    //[函数名的提升]---f
+    function f() {
+        console.log('[函数名的提升]---f');
+    }
+    //如果采用赋值语句定义函数，JavaScript就会报错
+    console.log('[赋值语句定义函数]---', (typeof f_1)); //undefined
+    // f_1();
+    // f_1 is not a function
+    var f_1 = function () {};
+    //上面代码等价于
+    // var f_1;
+    // f_1();
+    // f_1 = function(){}
+    //调用f_1时，f_1只是被声明了，还没有被赋值，等于undefined，所以会报错
+    //不能同时使用var和function声明同一个变量，但可以对function声明的变量赋值
+    function same_f() {
+        console.log('same_f = function命令');
+    }
+    same_f = function () {
+        console.log('same_f = 赋值语句');
+    }
+    same_f(); //赋值语句
+}
 
 //2---函数的属性和方法
 //2.1---name属性
+{
+    //函数的name属性返回函数的名字
+    function f_name() {}
+    console.log('[函数名]---', f_name.name); //f_name
+    //通过变量赋值定义的函数：
+    //如果变量的值是一个匿名函数，那么name属性返回变量名
+    var f_name_2 = function () {};
+    console.log('[函数名]---', f_name_2.name); //f_name_2
+    //如果变量的值是一个具名函数，那么那么属性返回function关键字之后的那个函数名
+    var f_name_3 = function my_name() {};
+    console.log('[函数名]---', f_name_3.name); //my_name
+    //上面代码中，f_name_3.name返回函数表达式的名字
+    //注意：真正的函数名还是f_name_3，而my_name这个名字只在函数体内部可用
+    //name属性的一个用处：获取参数函数的名字
+    function test(f) {
+        console.log('[参数函数的名字]---', f.name);
+    }
+    test(f_name); //f_name
+}
 //2.2---length属性
+{
+    //函数的length属性返回函数预期传入的参数个数，即函数定义之中的参数个数
+    function f_length(a, b) {
+        console.log('[函数定义之中的参数个数]---', f_length.length);
+    }
+    console.log('[length]---', f_length.length); //2
+    f_length(); //2
+    //不管调用时，输入了多少个参数，length属性始终等于2
+    //length属性提供了一种机制，判断定义时和调用时参数的差异，以便实现对象对象编程的"方法重载"
+}
 //2.3---toString()
+{
+    //函数的toString方法返回一个字符串，内容是函数的源码
+    function f_to_string() {
+        //函数内部的注释也可以返回
+        var a = 1;
+        a = a + 2 * a;
+    }
+    console.log('[toString]---', f_to_string.toString());
+    // function f_to_string() {
+    //     //函数内部的注释也可以返回
+    //     var a = 1;
+    //     a = a + 2 * a;
+    // }
+    //利用"函数内部的注释也可以返回"这一点，可以变相实现多行字符串
+    var multi_line = function (f) {
+        var array = f.toString().split('\n');
+        return array.slice(1, array.length - 1).join('\n');
+    }
+}
 
 //3---函数作用域
 //3.1---定义
+{
+    //作用域指的是变量存在的范围
+    //在ES5的规范中，JavaScript只有2种作用域
+    //全局作用域：变量在整个程序中一直存在，所有地方都可以读取
+    //函数作用域：变量只在函数内部存在
+    //ES6新增了块级作用域
+    //函数外部声明的变量就是全局变量，它可以在函数内部读取
+    var v = 1;
+    //函数内部可以读取全局变量v
+    function print_v() {
+        var v = 2;
+        console.log('[函数作用域]---全局变量 ', v);
+        var v_inside = 2;
+    }
+    print_v(); //2
+    //函数内部定义的变量，会在该作用域内覆盖同名全局变量
+    //在函数内部定义的变量，外部无法读取，称为"局部变量"
+    console.log('[函数作用域]---局部变量 ', (typeof v_inside)); //undefined
+    //注意：对于var命令来说，局部变量只能在函数内部声明，在其他区块中声明，一律都是全局变量
+    if (true) {
+        var x = 5;
+    }
+    console.log('[var命令]---', x); //5
+}
 //3.2---函数内部的变量提升
+{
+    //与全局作用域一样，函数作用域内部也会产生"变量提升"现象
+    //var命令声明的变量，不管在什么位置，变量声明都会被提升到函数体的头部
+    function foo(x) {
+        if (x > 100) {
+            var tmp = x - 100;
+        }
+    }
+    //等价于
+    function foo_2(x) {
+        var tmp;
+        if (x > 100) {
+            tmp = x - 100;
+        }
+    }
+}
 //3.3---函数本身的作用域
+{
+    //函数本身也是一个值，也有自己的作用域
+    //它的作用域与变量一样，就是其声明时所在的作用域，与其运行时所在的作用域无关
+    var a = 1;
+    var x = function () {
+        console.log(a);
+    };
+
+    function f() {
+        var a = 2;
+        x();
+    }
+    f(); //1
+    //上面代码中，函数x是在函数f的外部声明的，所以它的作用域绑定外层
+    //内部变量a不会到函数体f内取值，所以输出1，而不是2
+    //总之，函数执行时所在的作用域，是定义时的作用域，而不是调用时所在的作用域
+    //很容易犯错的一点是，如果函数A调用B函数，却没考虑到函数B不会引用函数A的内部变量
+    var x_1 = function () {
+        console.log(b);
+    };
+
+    function y(f) {
+        var b = 2;
+        f();
+    }
+    // y(x_1); //b is not defined
+    //同样的，函数体内部声明的函数，作用域绑定函数体内部
+    function foo() {
+        var x = 'x';
+
+        function bar() {
+            console.log(x);
+        }
+        return bar;
+    }
+    var x = 'x_2';
+    var foo_copy = foo();
+    foo_copy(); //x
+    //上面代码中，函数foo内部声明了一个函数bar，bar的作用域绑定foo
+    //当在foo外部取出bar执行时，变量x指向的是foo内部的x，而不是foo外部的x
+}
 
 //4---参数
 //4.1---概述
