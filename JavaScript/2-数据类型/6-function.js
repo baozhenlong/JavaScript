@@ -282,9 +282,84 @@
 
 //4---参数
 //4.1---概述
+{
+    //函数运行的时候，有时需要提供外部数据，不同的外部数据会得到不同的结果
+    //这种外部数据就叫参数
+    function square(x) {
+        return x * x;
+    }
+    console.log('[参数]---概述 ', square(2)); //4
+}
 //4.2---参数的省略
+{
+    //函数参数不是必需的，JavaScript允许省略参数
+    function return_first(a, b) {
+        return a;
+    }
+    console.log('[参数]---省略 ', return_first(1, 2, 3)); //1
+    console.log('[参数]---省略 ', return_first(1)); //1
+    console.log('[参数]---省略 ', return_first()); //undefined
+    console.log('[参数]---省略 ', return_first.length); //2
+    //省略的参数的值就变为undefined
+    //注意：函数的length属性与实际传入的参数个数无关，只反映函数预期传入的参数个数
+    //但是，没有办法只省略靠前的参数，而保留靠后的参数
+    //如果一定要省略靠前的参数，只有显式传入undefined
+    console.log('[参数]---省略 ', return_first(undefined, 1)); //undefined
+    //上面代码中，如果省略第一个参数，就会报错
+}
 //4.3---传递方式
+{
+    //函数参数如果是原始类型的值(数值、字符串、布尔值)，传递方式是传值传递
+    //这意味着，在函数体内修改参数值，不会影响到函数外部
+    var p = 2;
+
+    function pass_param_on_value(x) {
+        x = 4;
+    }
+    pass_param_on_value(p);
+    //在函数内部，p的值是原始值的拷贝，无论怎么修改，都不会影响到原始值
+    console.log('[参数]---传递方式 ', p); //2
+    //函数参数如果是复合类型的值(数组、对象、其他函数)，传递方式是传址传递
+    //也就是说，传入函数的原始值是地址，因此在函数内部修改参数，将会影响到原始值
+    var obj = {
+        p: 1
+    };
+
+    function pass_param_on_address(o) {
+        o.p = 2
+    }
+    pass_param_on_address(obj);
+    console.log('[参数]---传递方式 修改参数 ', obj); // { p: 2 }
+    //上面代码中，传入函数的是参数对象对象obj的地址
+    //因此，在函数内部修改obj的属性p，会影响到原始值
+    //注意：如果函数内部修改的，不是参数对象的某个属性，而是替换掉整个参数，这时不会影响到原始值
+    var obj = [1];
+
+    function replace_param(o) {
+        o = [1, 2, 3];
+    }
+    replace_param(obj);
+    console.log('[参数]---传递方式 替换参数 ', obj); //[ 1 ]
+    //上面代码中，在函数内部，参数对象obj被整个替换成另一个值，这时不会影响到原始值
+    //这是因为，形式参数o的值实际是参数obj的地址，重新对o赋值导致o指向另一个地址，保存在原地址上的的值当然不受影响
+}
 //4.4---同名参数
+{
+    //如果有同名的参数，则取最后出现的那个值
+    function same_name_param(a, a) {
+        console.log('[参数]---同名参数 = ', a);
+    }
+    same_name_param(1, 2); //2
+    //上面代码中，函数有2个参数，且参数名都是a；取值的时候，以后面的a为准，即使后面的a没有值或被省略，也是以其为准
+    same_name_param(1); //undefined
+    //调用函数的时候，没有提供第二个参数，a的取值就变成了undefined
+    //这时，如果要获取第一个参数a的值，可以使用arguments对象
+    function same_name_param_2(a, a) {
+        console.log('[参数]---同名参数 = ', a);
+        console.log('[参数]---同名参数中第一个参数 = ', arguments[0]);
+    }
+    same_name_param_2(1); //undefined;1
+}
 //4.5---arguments参数
 
 //5---函数的其他知识点
