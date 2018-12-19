@@ -360,12 +360,159 @@
     }
     same_name_param_2(1); //undefined;1
 }
-//4.5---arguments参数
+//4.5---arguments对象
+{
+    //4.5.1---定义
+    {
+        //由于JavaScript允许函数有不定数目的参数，所以需要一种机制(arguments对象)，可以在函数体内部读取所有参数
+        //arguments对象包含了函数运行时的所有参数，这个对象只有在函数体内部，才可以使用
+        //arguments[0]就是第一个参数，arguments[0]就是第二个参数，以此类推
+        var print_arguments = function (one) {
+            console.log('[arguments对象]---print_arguments = ', arguments[0]);
+            console.log('[arguments对象]---print_arguments = ', arguments[1]);
+            console.log('[arguments对象]---print_arguments = ', arguments[2]);
+        };
+        print_arguments(1, 2, 3); //1,2,3
+        //正常模式下，arguments对象可以在运行时修改
+        var change_arguments = function (a, b) {
+            arguments[0] = 2;
+            arguments[1] = 2;
+            return a + b;
+        };
+        console.log('[arguments对象]---change_arguments = ', change_arguments(1, 1)); //4
+        //上面代码中，函数调用时传入的参数，在函数内部被修改成2和2
+        //严格模式下，arguments对象是一个只读对象，修改它是无效的，但不会报错
+        //通过arguments对象的length属性，可以判断函数调用时到底带几个参数
+        function print_arguments_length() {
+            console.log('[arguments对象]---print_arguments_length = ', arguments.length);
+        }
+        print_arguments_length(1, 2, 3); //3
+        print_arguments_length(1); //1
+        print_arguments_length(); //0
+    }
+    //4.5.2---与数组的关系
+    {
+        //注意：虽然arguments很像数组，但它是一个对象；数组专有的方法(比如slice、forEach)，不能在arguments对象上直接使用
+        //如果要让arguments对象使用数组方法，真正的解决方法是将arguments转为真正的数组
+        //转换方法---1---slice
+        //转换方法---2---逐一填入数组
+        var convert_to_array = function () {
+            var args = Array.prototype.slice.call(arguments);
+            console.log('[与数组的关系]---slice args = ', args);
+            args = [];
+            for (var i = 0; i < arguments.length; i++) {
+                args.push(arguments[i]);
+            }
+            console.log('[与数组的关系]---push args = ', args);
+        }
+        convert_to_array(1, 2, 3); //[ 1, 2, 3 ]
+    }
+    //4.5.3---callee属性
+    {
+        //arguments对象带有一个callee属性，返回它对应的原函数
+        var print_callee = function () {
+            console.log('[callee属性]---', arguments.callee === print_callee);
+        }
+        print_callee(); //true
+        //可以通过arguments.callee，达到调用函数自身的目的；这个属性在严格模式里面是禁用的，因此不建议使用
+    }
+}
 
 //5---函数的其他知识点
 //5.1---闭包
+{
+    //函数内部可以直接读取全局变量
+    //函数外部无法读取函数内部声明的变量
+    function f1() {
+        var n = 999;
+
+        function f2() {
+            console.log('[闭包]---', n);
+        }
+        return f2;
+    }
+    //上面代码中，函数f2就在函数f1内部，这时f1内部的所有局部变量，对f2都是可见的
+    //但是反过来就不行，f2内部的局部变量，对f1就是不可见的
+    //这就是JavaScript语言特有的"链式作用域"结构，子对象会一级一级地向上寻找所有父对象的变量
+    //所以，父对象的所有变量，对子对象都是可见的，反之则不成立
+    var result = f1();
+    result(); //999
+    //上面代码中，函数f1的返回值就是函数f2，由于f2可以读取f1的内部变量，所以就可以在外部获得f1的内部变量
+    //闭包就是函数f2，即能够读取其他函数内部变量的函数
+    //由于在JavaScript语言中，只有函数内部的子函数才能读取内部变量，因此可以把闭包简单理解成"定义在一个函数内部的函数"
+    //闭包最大的特点：就是它可以"记住"诞生的环境，比如f2记住了它诞生的环境f1，所以从f2可以得到f1的内部变量
+    //在本质上，闭包就是将函数内部和函数外部连接起来的一座桥梁
+    //闭包的最大用处---1---可以读取函数内部的变量
+    //闭包的最大用处---2---让函数内部的变量始终保持在内存中，即闭包可以使得它诞生环境一直存在
+    //例子：闭包使得内部变量记住上一次调用时的运算结果
+    function create_incrementor(start) {
+        return function () {
+            return start++;
+        }
+    }
+    var inc = create_incrementor(5);
+    console.log('[闭包]---', inc()); //5
+    console.log('[闭包]---', inc()); //6
+    console.log('[闭包]---', inc()); //7
+    //上面代码中，start是函数create_incrementor的内部变量
+    //通过闭包，start的状态被保留了，每一次调用都是在上一次调用的基础上进行计算
+    //从中可以看到，闭包inc使得函数create_incrementor的内部环境，一直存在
+    //所以，闭包可以看作是函数内部作用域的一个的接口
+    //因为inc始终存在内存中，而inc的存在依赖于create_incrementor，因此也始终在内存中，不会在调用结束后，被垃圾回收机制回收
+    //闭包的用处---3---封装对象的私有属性和私有方法
+    function Person(name) {
+        var age;
+
+        function set_age(n) {
+            age = n;
+        }
+
+        function get_age() {
+            return age;
+        }
+        return {
+            name: name,
+            get_age: get_age,
+            set_age: set_age
+        };
+    }
+    var person = Person('damon');
+    person.set_age(25);
+    console.log('[闭包]---封装对象的私有属性和私有方法 ', person.get_age()); //25
+    //上面代码中，函数Person的内部变量age，通过闭包get_age和set_age，变成了返回对象person的私有变量
+    //注意：外层函数每次运行，都会生成一个新的闭包，而这个闭包又会保留外层函数的内部变量，所以内存消耗很大
+    //因此，不能滥用闭包，否则会造成网页的性能问题
+}
 //5.2---立即调用的函数表达式(IIFE)
+{
+    //在JavaScript中，圆括号()是一种运算符，跟在函数名之后，表示调用该函数
+    //function关键字，既可以当作语句，也可以当作表达式
+    //JavaScript引擎规定，如果function关键字出现在行首，一律解释成语句
+    //语句
+    function f_1() {}
+    // function f_1() {}()---报错：函数定义不应该以圆括号结尾
+    //表达式
+    var f_2 = function f_2() {};
+    (function () {
+        console.log('[IIFE]---1')
+    }()); //推荐写法
+    (function () {
+        console.log('[IIFE]---2')
+    })();
+    //上面两种写法都是以圆括号开头，引擎就会认为后面跟的是一个表达式，而不是定义语句，所以就避免了错误
+    //这就叫做"立即调用的函数表达式"，简称IIFE
+    //注意：上面两种写法最后的分号都是必须的；如果省略分号，遇到连着两个IIFE，可能就会报错
+    //通常情况下，只对匿名函数使用这种"立即执行的函数表达式"
+    //目的---1---不必为函数命名，避免了污染全局变量
+    //目的---2---IIFE内部形成了一个单独的作用域，可以封装一些外部无法读取的私有变量
+}
 
 //6---eval命令
 //6.1---基本用法
+{
+    //eval命令接受一个字符串作为参数，并将这个字符串当作语句执行
+    eval('var a = 123;');
+    console.log('[eval]---基本用法 ', a); //123
+    //上面代码将字符串当作语句运行，生成了变量
+}
 //6.2---eval的别名调用
