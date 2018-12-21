@@ -299,6 +299,7 @@
     console.log("[isFinite]---= ", isFinite(null)); //true
     console.log("[isFinite]---= ", isFinite(-1)); //true
     //除了Infinity、-Infinity、NaN、undefined这几个值会返回false。isFinite对于其他的数值都会返回true
+    //在必要情况下，参数会首先转为一个数值
     console.log("[isFinite]---= ", isFinite("1")); //true
     console.log("[isFinite]---= ", isFinite("x")); //false
 }
