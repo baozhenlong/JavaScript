@@ -511,8 +511,55 @@
 //6.1---基本用法
 {
     //eval命令接受一个字符串作为参数，并将这个字符串当作语句执行
-    eval('var a = 123;');
-    console.log('[eval]---基本用法 ', a); //123
-    //上面代码将字符串当作语句运行，生成了变量
+    var return_value = eval('var a = 123;');
+    console.log('[eval]---基本用法 ', a); //undefined
+    console.log('[eval]---基本用法 return_value = ', return_value); //123
+    //上面代码将字符串当作语句运行，生成了变量a
+    //如果参数字符串无法当作语句运行，那么就会报错
+    // eval('3x');
+    //放在eval中的字符串，应该有独自存在的意义，不能用来与eval以外的命令配合使用
+    // eval('return;');
+    //return不能单独使用，必须在函数中使用
+    //如果eval的参数不是字符串，那么会原样返回
+    console.log('[eval]---参数不是字符串 ', eval(123));
+    //eval没有自己的作用域，都在当前作用域内执行，因此可能会修改当前作用域的变量的值，造成安全问题
+    var b = 1;
+    eval('b = 2');
+    console.log('[eval]--- b = ', b); //2
+    //上面代码中，eval命令修改了外部变量b的值；由于这个原因，eval有安全风险
+    //为了防止这种风险，JavaScript规定，如果使用严格模式，eval内部声明的变量，不会影响到外部作用域
+    // (function () {
+    //     'use strict';
+    //     eval('var c = 3');
+    //     console.log('[eval]--- typeof(c) = ', typeof (c)); //undefined
+    //     //上面代码中，函数内部是严格模式，这时eval内部声明的c变量，就不会影响到外部
+    //     //不过，即使在严格模式下，eval依然可以读写当前作用域的变量
+    //     eval('b = 3');
+    //     console.log('[eval]--- b = ', b); //3
+    //     //上面代码，严格模式下，eval内部还是改写了外部变量，可见安全风险依然存在
+    // }())
+    //总之，eval的本质是在当前作用域之中，注入代码
+    //由于安全风险和不利于JavaScript引擎优化执行速度，所以一般不推荐使用
+    //通常情况下，eval最常见的场合是解析JOSN数据的字符串，不过正确的做法应该是使用原生的JSON.parse方法
 }
 //6.2---eval的别名调用
+{
+    //下面这种情况，引擎在静态代码分析的阶段，根本无法分辨执行的是eval
+    var m = eval;
+    m('var z = 1;');
+    console.log('[eval]---别名调用 z = ', z); //1
+    //上面代码中，变量m是eval的别名；静态代码分析阶段，引擎分辨不出m('var z = 1;')执行的是eval命令
+    //为了保证eval的别名不影响代码优化，JavaScript的标准规定，凡是使用别名执行eval，eval内部一律是全局作用域
+    var xx = 11;
+    //跟文档有出入！！！！！！
+    function alias_eval() {
+        var xx = 22;
+        var e = eval;
+        e('xx = 3');
+        // e('console.log("[eval]---别名调用 y = ", y )');
+        console.log("[eval]---别名调用 xx = ", xx);
+    }
+    alias_eval(); //22
+    console.log("[eval]---别名调用 xx = ", xx); //11
+    //只要不是直接调用，都属于别名调用
+}
