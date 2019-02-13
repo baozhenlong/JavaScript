@@ -136,7 +136,7 @@
         }
         //5.2.4---Date.prototype.toJSON()
         {
-            //返回一个符合JSOn格式的ISO日期字符串，与toISOString方法的返回结果完全相同
+            //返回一个符合JSON格式的ISO日期字符串，与toISOString方法的返回结果完全相同
             console.log('[实例方法]---toJSON', d.toJSON());
             //2019-02-11T03:19:48.798Z
         }
