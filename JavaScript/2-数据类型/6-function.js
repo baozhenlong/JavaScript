@@ -121,7 +121,7 @@
     function f() {
         console.log('[函数名的提升]---f');
     }
-    //如果采用赋值语句定义函数，JavaScript就会报错
+    //如果采用赋值语句定义函数，提前调用，JavaScript就会报错
     console.log('[赋值语句定义函数]---', (typeof f_1)); //undefined
     // f_1();
     // f_1 is not a function
