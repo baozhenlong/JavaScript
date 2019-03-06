@@ -161,6 +161,7 @@
     {
         //shift：用于删除数组的第一个元素，并返回该元素
         {
+            //如果数组是空的，那么shift()方法将不进行任何操作，返回undefined值
             //注意：该方法会改变原数组
             var arr = ['a', 'b', 'c'];
             console.log('[实例方法]---shift', arr.shift());
