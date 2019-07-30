@@ -1,141 +1,143 @@
-//---数值
+// --- 数值
 
-//1---概述
-//1.1---整数和浮点数
+// 1 --- 概述
+// 1.1 --- 整数和浮点数
 {
-    //JavaScript内部，所有数字都是以64位浮点数形式存储，即使整数也是如此；所以1和1.0是相同的，是同一个数
-    console.log(1 === 1.0); //true
-    //这就是说，JavaScript语言的底层根本没有整数，所有数字都是小数(64位浮点数)
-    //容易造成混淆的是，某些运算只有整数才能完成，此时JavaScript会自动把64位浮点数，转为32位整数，然后再进行运算
-    //由于浮点数不是精确的值，所以涉及小数的比较和运算要特别小心
-    console.log(0.1 + 0.2 === 0.3); //false
-    console.log(0.3 / 0.1); //2.9999999999999996
-    console.log((0.3 - 0.2) === (0.2 - 0.1)); //false
+    // JavaScript 内部，所有数字都是以 64 位浮点数形式存储，即使整数也是如此；所以 1 和 1.0 是相同的，是同一个数
+    console.log('1 === 1.0', 1 === 1.0); // true
+    console.log('1 === 1.00', 1 === 1.2); // false
+    // 这就是说， JavaScript 语言的底层根本没有整数，所有数字都是小数（ 64 位浮点数 ）
+    // 容易造成混淆的是，某些运算只有整数才能完成，此时 JavaScript 会自动把 64 位浮点数，转为 32 位整数，然后再进行运算
+    // 由于浮点数不是精确的值，所以涉及小数的比较和运算要特别小心
+    console.log('0.1 + 0.2 === 0.3', 0.1 + 0.2 === 0.3); // false
+    console.log('0.3 / 0.1', 0.3 / 0.1); // 2.9999999999999996
+    console.log('0.3 - 0.2 === 0.2 - 0.1', (0.3 - 0.2) === (0.2 - 0.1)); // false
 }
-//1.2---数值精度
+// 1.2 --- 数值精度
 {
-    //根据国际标准IEEE 754，JavaScript浮点数的64个二进制位，从最左边开始，是这样组成的：
-    //第1位：符号位；0表示正数，1表示负数---决定了一个数的正负
-    //第2位到12位(共11位)：指数部分---决定了数值的大小
-    //第13位到64位(共52)：小数部分；即有效数字---决定了数值的精度
-    //指数部分一共有11个二进制位，因此大小范围就是0到2047
-    //IEEE 754规定如果指数部分的值在0到2047之间(不含2个端点)，那么有效数字的第一位默认总是1，不保存在在64位浮点数之中
-    //也就是说有效数字这时总是1.xx...xx的形式，其中xx...xx的部分保存在64位浮点数之中，最长可能为52位
-    //因此JavaScript提供的有效数字最长为53个二进制位
-    //(-1)符号位 * 1.xx...xx * 2^指数部分
-    //上面公式是正常情况下(指数部分在0到2047之间)，一个数在JavaScript内部实现的表示形式
-    //精确度最多只能到53个二进制位，这意味着，绝对值小于2的53次方的整数，即-2^53到2^53，都可以精确表示
-    console.log(Math.pow(2, 53)); //9007199254740992
-    console.log(Math.pow(2, 53) + 1); //9007199254740992
-    console.log(Math.pow(2, 53) + 2); //9007199254740994
-    console.log(Math.pow(2, 53) + 3); //9007199254740996
-    console.log(Math.pow(2, 53) + 4); //9007199254740996
-    //上面代码中，大于2的53次方以后，整数运算的结果开始出现错误；所以大于2的53次方的数值，都无法保持精度
+    // 根据国际标准 IEEE 754 ， JavaScript 浮点数的 64 个二进制位，从最左边开始，是这样组成的：
+    // 第 1 位：符号位； 0 表示正数， 1 表示负数 --- 决定了一个数的正负
+    // 第 2 位到 12 位（共 11 位）：指数部分 --- 决定了数值的大小
+    // 第 13 位到 64 位（共 52 位）：小数部分；即有效数字 --- 决定了数值的精度
+    // 指数部分一共有 11 个二进制位，因此大小范围就是 0 到 2047
+    // IEEE 754 规定如果指数部分的值在 0 到 2047 之间(不含 2 个端点)，那么有效数字的第一位默认总是 1 ，不保存在在 64 位浮点数之中
+    // 也就是说有效数字这时总是 1.xx...xx 的形式，其中 xx...xx 的部分保存在 64 位浮点数之中，最长可能为 52 位
+    // 因此 JavaScript 提供的有效数字最长为 53 个二进制位
+    // (-1) 符号位 * 1.xx...xx * 2^指数部分
+    // 上面公式是正常情况下（指数部分在 0 到 2047 之间），一个数在 JavaScript 内部实现的表示形式
+    // 精确度最多只能到 53 个二进制位，这意味着，绝对值小于 2 的 53 次方的整数，即 -2^53 到 2^53 ，都可以精确表示
+    console.log('[数值精度]---', Math.pow(2, 53)); // 9007199254740992
+    console.log('[数值精度]---', Math.pow(2, 53) + 1); // 9007199254740992
+    console.log('[数值精度]---', Math.pow(2, 53) + 2); // 9007199254740994
+    console.log('[数值精度]---', Math.pow(2, 53) + 3); // 9007199254740996
+    console.log('[数值精度]---', Math.pow(2, 53) + 4); // 9007199254740996
+    //上面代码中，大于 2 的 53 次方以后，整数运算的结果开始出现错误；所以大于 2 的 53 次方的数值，都无法保持精度
 }
-//1.3--数值范围
+// 1.3 -- 数值范围
 {
-    //根据标准，64位浮点数的指数部分的长度是11个二进制位，意味着指数部分的最大值是2047(2^11-1)
-    //也就是说，64位浮点数的指数部分的值最大为2047，分出一半表示负数
-    //则JavaScript能够表示的数值范围为2^1024到2^-1023(开区间)，超出这个范围的数无法表示
-    //如果一个数>=2^1024，那么就会发生"正向溢出"，即JavaScript无法表示这么大的数，这是会返回Infinity
-    console.log(Math.pow(2, 1024)); //Infinity
-    //如果一个数<=2^-1075(指数部分最小值-1023，再加上小数部分的52位)，那么就会发生"负向溢出"，即JavaScript无法表示这么小的数，这是会直接返回0
-    console.log(Math.pow(2, -1075)); //5e-324
-    console.log(Math.pow(2, -1076)); //0
+    // 根据标准， 64 位浮点数的指数部分的长度是 11 个二进制位，意味着指数部分的最大值是 2047 （ 2^11-1 ）
+    // 也就是说， 64 位浮点数的指数部分的值最大为 2047 ，分出一半表示负数
+    // 则 JavaScript 能够表示的数值范围为 2^1024 到 2^-1023 （开区间），超出这个范围的数无法表示
+    // 如果一个数 >= 2^1024 ，那么就会发生"正向溢出"，即 JavaScript 无法表示这么大的数，这是会返回 Infinity
+    console.log(Math.pow(2, 1024)); // Infinity
+    //如果一个数 <= 2^-1075 （指数部分最小值 -1023 ，再加上小数部分的 52 位），那么就会发生"负向溢出"，即 JavaScript 无法表示这么小的数，这时会直接返回 0
+    console.log(Math.pow(2, -1075)); // 5e-324
+    console.log(Math.pow(2, -1076)); // 0
     var x = 0.5;
     for (var i = 0; i < 25; i++) {
         x = x * x;
     }
-    console.log("x = ", x); //0
-    //上面代码中，对0.5连续做25次平方，由于最后结果太接近0，超出可表示的范围，JavaScript就直接将其转为0
-    //JavaScript提供Number对象的MAX_VALUE和MIN_VALUE属性，返回可以表示的具体的最大值和最小值
-    console.log(Number.MAX_VALUE); //1.7976931348623157e+308
-    console.log(Number.MIN_VALUE); //5e-324
+    console.log("x = ", x); // 0
+    // 面代码中，对 0.5 连续做 25 次平方，由于最后结果太接近 0 ，超出可表示的范围， JavaScript 就直接将其转为 0
+    // JavaScript 提供 Number 对象的 MAX_VALUE 和 MIN_VALUE 属性，返回可以表示的具体的最大值和最小值
+    console.log('MAX_VALUE', Number.MAX_VALUE); // 1.7976931348623157e+308
+    console.log('MIN_VALUE', Number.MIN_VALUE); // 5e-324
 }
 
-//2---数字的表示法
+// 2 --- 数字的表示法
 {
-    //JavaScript的数值有很多种表示方法，可以用字面形式直接表示，比如35(十进制)和0xFF(十六进制)
-    //数值也可以采用科学计数法表示：
-    console.log(123e3); //123000
-    console.log(123e-3); //0.123
-    console.log(-3.E2); //-300
-    console.log(-3.E+2); //-300
-    console.log(.2e-2); //0.002
-    //科学计数法允许字母e或E的后面，跟着一个整数，表示则个数值的指数部分
-    //以下2中情况，JavaScript会自动将数值转为科学计数法表示，其他情况都采用字面形式直接表示：
-    //情况1---小数点前的数字>21位
-    console.log(123456789012345678901); //123456789012345678901
-    console.log(1234567890123456789012); //1.2345678901234568e+21
-    //情况2---小数点后紧跟5个以上的0
-    console.log(0.000005); //0.000005
-    console.log(0.0000006); //6e-7
+    // JavaScript 的数值有很多种表示方法，可以用字面形式直接表示，比如 35 （十进制）和 0xFF （十六进制）
+    // 数值也可以采用科学计数法表示：
+    console.log('[数字的表示法]---', 123e3); // 123000
+    console.log('[数字的表示法]---', 123e-3); // 0.123
+    console.log('[数字的表示法]---', -3.E2); // -300
+    console.log('[数字的表示法]---', -3.E+2); // -300
+    console.log('[数字的表示法]---', .2e-2); // 0.002
+    // 科学计数法允许字母 e 或 E 的后面，跟着一个整数，表示整个数值的指数部分
+    // 以下两种情况， JavaScript 会自动将数值转为科学计数法表示，其他情况都采用字面形式直接表示：
+    // 情况 1 --- 小数点前的数字 > 21 位
+    console.log('[数字的表示法]---', 123456789012345678901); // 123456789012345678901
+    console.log('[数字的表示法]---', 1234567890123456789012); // 1.2345678901234568e+21
+    // 情况 2 --- 小数点后紧跟 5 个以上的 0
+    console.log('[数字的表示法]---', 0.000005); // 0.000005
+    console.log('[数字的表示法]---', 0.0000006); // 6e-7
 }
 
-//3---数值的进制
+// 3 --- 数值的进制
 {
-    //使用字面量表示一个数值时，JavaScript对整数提供4种进制的表示方法：十进制、十六进制、八进制、二进制
-    //十进制：没有前导0的数值
-    //八进制：有前缀0o或0O的数值；或者有前导0，且只用到0-7的八个阿拉伯数字的数值
-    //十六进制：有前缀0x或0X的数值
-    //二进制：有前缀0b或0B的数值
-    //默认情况下，JavaScript内部会自动将八进制、十六进制、二进制转为十进制
-    console.log(0o377); //255
-    console.log(0O377); //255
-    console.log(0xff); //255
-    console.log(0b11); //3
-    //如果八进制、十六进制、二进制的数值里面，出现不属于该进制的数字，就会报错
+    // 使用字面量表示一个数值时， JavaScript 对整数提供 4 种进制的表示方法：十进制、十六进制、八进制、二进制
+    // 十进制：没有前导 0 的数值
+    // 八进制：有前缀 0o 或 0O 的数值；或者有前导 0 ，且只用到 0-7 的八个阿拉伯数字的数值
+    // 十六进制：有前缀 0x 或 0X 的数值
+    // 二进制：有前缀 0b 或 0B 的数值
+    // 默认情况下， JavaScript 内部会自动将八进制、十六进制、二进制转为十进制
+    console.log('[数值的进制]---', 0o377); // 255
+    console.log('[数值的进制]---', 0O377); // 255
+    console.log('[数值的进制]---', 0xff); // 255
+    console.log('[数值的进制]---', 0b11); // 3
+    // 如果八进制、十六进制、二进制的数值里面，出现不属于该进制的数字，就会报错
 }
 
-//4---特殊数值
-//4.1---正零和负零
+// 4 --- 特殊数值
+// 4.1 --- 正零和负零
 {
-    //JavaScript的64位浮点数之中，有一个二进制位是符号位；这意味着，任何一个数都有一个对应的负值，就连0也不例外
-    //JavaScript内部实际上存在2个0：+0和-0；区别就是64位浮点数表示法的符号位不同；它们是等价的
-    console.log(0 === +0); //true
-    console.log(0 === -0); //true
-    console.log(-0 === +0); //true
-    //几乎所有场合，+0和-0都会被当作正常的0
-    console.log("+0 = ", +0); //0
-    console.log("-0 = ", -0); //0
-    console.log((+0).toString()); //"0"
-    console.log((-0).toString()); //"0"
-    //唯一有区别的场合是，+0或-0当作分母，返回值是不相等的
-    console.log(1 / +0); //Infinity
-    console.log(1 / -0); //-Infinity
+    // JavaScript 的 64 位浮点数之中，有一个二进制位是符号位；这意味着，任何一个数都有一个对应的负值，就连 0 也不例外
+    // JavaScript 内部实际上存在 2 个 0 ： +0 和 -0 ；区别就是 64 位浮点数表示法的符号位不同；它们是等价的
+    console.log('[正零和负零]---', 0 === +0); // true
+    console.log('[正零和负零]---', 0 === -0); // true
+    console.log('[正零和负零]---', -0 === +0); // true
+    //几乎所有场合， +0 和 -0 都会被当作正常的0
+    console.log('[正零和负零]---+0', +0); //0
+    console.log('[正零和负零]----0', -0); //0
+    console.log('[正零和负零]---+0 string', (+0).toString()); // "0"
+    console.log('[正零和负零]----0 string', (-0).toString()); // "0"
+    //唯一有区别的场合是， +0 或 -0 当作分母，返回值是不相等的
+    console.log('[正零和负零]----1 / +0', 1 / +0); // Infinity
+    console.log('[正零和负零]----1 / -0', 1 / -0); // -Infinity
 }
-//4.2---NaN
+// 4.2 --- NaN
 {
-    //4.2.1---含义
+    // 4.2.1 --- 含义
     {
-        //NaN是JavaScript的特殊值，表示"非数字"
-        //主要出现在将字符串解析成数字出错的场合
-        console.log(5 - "x"); //NaN
-        //另外一些数学函数的运算结果会出现NaN
-        console.log(Math.acos(2)); //NaN
-        //0除以0也会得到NaN
-        console.log(0 / 0); //NaN
-        //需要注意的是：NaN不是独立的数据类型，而是一个特殊数值，它的数据类型依然属于Number
-        console.log(typeof NaN); //"number"
+        // NaN 是 JavaScript 的特殊值，表示"非数值"
+        // 用于表示一个本来要返回数值的操作却未返回数值的情况
+        // 主要出现在将字符串解析成数字出错的场合
+        console.log('[NaN]---', 5 - "x"); // NaN
+        // 另外一些数学函数的运算结果会出现 NaN
+        console.log('[NaN]---', Math.acos(2)); // NaN
+        // 0 除以 0 也会得到 NaN
+        console.log('[NaN]---', 0 / 0); // NaN
+        //需要注意的是： NaN 不是独立的数据类型，而是一个特殊数值，它的数据类型依然属于 Number
+        console.log('[NaN]---', typeof NaN); // "number"
     }
-    //4.2.2---运算规则
+    // 4.2.2 --- 运算规则
     {
-        //NaN不等于任何值，包括它本身
-        console.log(NaN === NaN); //false
-        //数组的indexOf方法内部使用的是严格相等运算符，所以该方法对NaN不成立
-        console.log([NaN].indexOf(NaN)); //-1
-        //NaN在布尔运算时被当作false
-        console.log(Boolean(NaN)); //false
-        //NaN与任何数(包括它自己)的运算，得到的都是NaN
-        console.log(NaN + 1); //NaN
-        console.log(NaN - 1); //NaN
-        console.log(NaN * 1); //NaN
-        console.log(NaN / 1); //NaN
+        // NaN 不等于任何值，包括它本身
+        console.log('[NaN]---', NaN === NaN); // false
+        // 数组的 indexOf 方法内部使用的是严格相等运算符，所以该方法对 NaN 不成立
+        console.log('[NaN]---', [NaN].indexOf(NaN)); // -1
+        // NaN 在布尔运算时被当作 false
+        console.log('[NaN]---', Boolean(NaN)); // false
+        // 涉及到 NaN 的操作都会返回 NaN
+        console.log('[NaN]---', NaN + 1); // NaN
+        console.log('[NaN]---', NaN - 1); // NaN
+        console.log('[NaN]---', NaN * 1); // NaN
+        console.log('[NaN]---', NaN / 1); // NaN
     }
 }
-//4.3---Infinity
+// 4.3 --- Infinity
 {
-    //4.3.1---含义
+    // 4.3.1 --- 含义
     {
         //Infinity表示"无穷"，用来表示2种场景：
         //场景1---正的数值太大、负的数值太小，无法表示
@@ -257,35 +259,40 @@
     console.log("[parseFloat]---= ", parseFloat("123.45#")); //123.45
     console.log("[Number]---= ", Number("123.45#")); //NaN
 }
-//5.3---isNaN()
+// 5.3 --- isNaN()
 {
-    //isNaN方法可以用来判断一个值是否为NaN
-    console.log("[isNaN]---= ", isNaN("NaN")); //true
-    console.log("[isNaN]---= ", isNaN(123)); //false
-    //但是，isNaN只对数值有效，如果传入其他值，会被先转成数值
-    //比如，传入字符串的时候，字符串会被先转成NaN，所以最后返回true
-    //isNaN为true的值，有可能不是NaN，而是一个字符串
-    console.log("[isNaN]---= ", isNaN("hi")); //true
-    //等价于
-    console.log("[isNaN]---= ", isNaN(Number("hi"))); //true
-    //出于同样的原因，对于对象和数组，isNaN也返回true
-    console.log("[isNaN]---= ", isNaN({})); //true
-    //等价于
-    console.log("[isNaN]---= ", isNaN(Number({}))); //true
-    console.log("[isNaN]---= ", isNaN(["xyz"])); //true
-    //等价于
-    console.log("[isNaN]---= ", isNaN(Number(["xyz"]))); //true
-    //但是对于空数组和只有一个数值成员的数组，isNaN返回false
-    console.log("[isNaN]---= ", isNaN([])); //false
-    console.log("[isNaN]---= ", isNaN([123])); //false
-    console.log("[isNaN]---= ", isNaN(["123"])); //false
-    //这些数组能被Number函数转成数值
-    //因此使用isNaN之前，最好判断一下数据类型
-    function my_is_NaN(value) {
+    // isNaN(value) 方法可以用来判断一个值是否为 NaN
+    // 参数 value (Any) --- 要被检测的值；如果该参数不是 Number 类型，会先尝试将这个参数转换为数值，再对转换结果进行判断
+    console.log("[isNaN]---", isNaN("NaN")); // true
+    console.log("[isNaN]---", isNaN(undefined)); // true
+    console.log("[isNaN]---", isNaN(123)); // false
+    // 但是， isNaN 只对数值有效，如果传入其他值，会被先转成数值
+    // 比如，传入字符串的时候，当字符串被先转成 NaN时 ，最后会返回 true
+    // isNaN 为 true 的值，有可能不是 NaN ，而是一个字符串
+    console.log("[isNaN]---", isNaN("hi")); // true
+    // 等价于
+    console.log("[isNaN]---", isNaN(Number("hi"))); // true
+    // 出于同样的原因，对于对象和数组， isNaN 也返回 true
+    console.log("[isNaN]---", isNaN({})); //true
+    // 等价于
+    console.log("[isNaN]---", isNaN(Number({}))); // true
+    console.log("[isNaN]---", isNaN(["xyz"])); // true
+    // 等价于
+    console.log("[isNaN]---", isNaN(Number(["xyz"]))); // true
+    // 但是对于空数组和只有一个数值成员的数组，isNaN 返回 false
+    console.log("[isNaN]---", isNaN([])); // false
+    console.log('[isNan]--- Number([])', Number([])); // 0
+    console.log("[isNaN]---", isNaN([123])); // false
+    console.log('[isNan]--- Number([123])', Number([123])); // 123
+    console.log("[isNaN]---", isNaN(["123"])); // false
+    console.log('[isNan]--- Number(["123"])', Number(['123'])); // 123
+    // 这些数组能被 Number 函数转成数值
+    // 因此使用 isNaN 之前，最好判断一下数据类型
+    function myIsNaN(value) {
         return typeof value === "number" && isNaN(value);
     }
-    //判断NaN更可靠的方法是，利用NaN为唯一不等于自身的值的这个特点，进行判断
-    function my_is_NaN_better(value) {
+    // 判断 NaN 更可靠的方法是，利用 NaN 为唯一不等于自身的值的这个特点，进行判断
+    function myIsNaNBetter(value) {
         return value !== value;
     }
 }
