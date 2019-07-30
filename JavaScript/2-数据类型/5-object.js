@@ -1,30 +1,34 @@
-//---对象
+// --- 对象
 
-//1---概述
-//1.1---生成方法
+// 1 --- 概述
+// 1.1 --- 生成方法
 {
-    //对象(object)是JavaScript语言的核心概念，也是最重要的数据类型
-    //对象：一组"键值对"的集合，是一种无序的复合数据集合
+    // 对象 (object) 是 JavaScript 语言的核心概念，也是最重要的数据类型
+    // 对象：一组"键值对"的集合，是一种无序的复合数据集合
+    // 创建 Object 类型实例的方式
+    // 方式 1 --- 使用 new + 构造函数
+    var obj = new Object();
+    // 方式 2 --- 使用对象字面量表示法（定义对象的简写形式）
     var obj = {
         foo: 'hello',
         bar: 'world'
     };
-    //上面代码中，大括号就定义了一个对象，它被赋值给变量obj，所以变量obj就指向一个对象
-    //该对象内部包含2个键值对(又称为2个"成员")
-    //foo、bar：键名；成员的名称
-    //"hello"、"world"：键值；成员的值
-    //键名与键值之间用冒号(:)分隔
-    //键值对之间用逗号(,)分隔
+    // 上面代码中，大括号就定义了一个对象，它被赋值给变量 obj ，所以变量 obj 就指向一个对象
+    // 该对象内部包含 2 个键值对（又称为 2 个"成员"）
+    // foo、bar：键名；成员的名称
+    // "hello"、"world"：键值；成员的值
+    // 键名与键值之间用冒号 (:) 分隔
+    // 键值对之间用逗号 (,) 分隔
 }
-//1.2---键名
+// 1.2 --- 键名
 {
-    //对象的所有键名都是字符串(ES6又引入了Symbol值也可以作为键名)，所以加不加引号都可以
-    //上述等价声明
+    // 对象的所有键名都是字符串（ ES6又引入了 Symbol 值也可以作为键名 ） ，所以加不加引号都可以
+    // 上述等价声明
     var obj = {
         'foo': 'hello',
         'bar': 'world'
     };
-    //如果键名是数值，会比自动转为字符串
+    // 如果键名是数值，会被自动转为字符串
     var obj = {
         1: 'a',
         1e2: 'b',
@@ -38,133 +42,135 @@
     //     '255': true,
     //     '0.234': true
     // }
-    //如果键名不符合标识名的条件(比如第一个字符为数字，或者含有空格或运算符)，且也不是数字，则必须加上引号，否则会报错
+    // 如果键名不符合标识名的条件（比如第一个字符为数字，或者含有空格或运算符），且也不是数字，则必须加上引号，否则会报错
     var obj = {
-        // 1p: 'hello',//报错
+        // 1p: 'hello', // 报错
         '1p': 'hello'
     };
-    //对象的每一个键名又称为"属性"，它的键值可以是任何数据类型
-    //如果一个属性的值为函数，通常把这个属性称为"方法"，它可以像函数那样调用
+    // 对象的每一个键名又称为"属性"，它的键值可以是任何数据类型
+    // 如果一个属性的值为函数，通常把这个属性称为"方法"，它可以像函数那样调用
     var obj = {
         p: function (x) {
             return 2 * x;
         }
     };
-    console.log(obj.p(1)); //2
-    //如果属性的值还是一个对象，就形成了链式引用
-    var o_1 = {};
-    var o_2 = {
+    console.log(obj.p(1)); // 2
+    // 如果属性的值还是一个对象，就形成了链式引用
+    var obj1 = {};
+    var obj2 = {
         bar: 'hello'
     };
-    o_1.foo = o_2;
-    console.log(o_1.foo.bar); //hello
-    //上面代码中，对象o_1的属性foo指向对象o_2，就可以链式引用o_2的属性
-    //对象的属性之间用逗号(,)分隔，最后一个属性后面可以加逗号，也可以不加
-    //属性可以动态创建，不必在对象声明时就指定
+    obj1.foo = obj2;
+    console.log(obj1.foo.bar); // hello
+    // 上面代码中，对象 obj1 的属性 foo 指向对象 obj2 ，就可以链式引用 obj2 的属性
+    // 对象的属性之间用逗号(,)分隔，最后一个属性后面可以加逗号，也可以不加
+    // 属性可以动态创建，不必在对象声明时就指定
     var obj = {};
     obj.foo = 123;
-    console.log(obj.foo); //123
+    console.log(obj.foo); // 123
 }
-//1.3---对象的引用
+// 1.3 --- 对象的引用
 {
-    //如果不同的变量名指向同一个对象，那么它们都是这个对象的引用，也就是说指向同一个内存地址
-    //修改其中一个变量，会影响到其他所有变量
+    // 如果不同的变量名指向同一个对象，那么它们都是这个对象的引用，也就是说指向同一个内存地址
+    // 修改其中一个变量，会影响到其他所有变量
     var obj_1 = {};
     var obj_2 = obj_1;
     obj_1.a = 1;
-    console.log(obj_2.a); //1
+    console.log(obj_2.a); // 1
     obj_2.b = 2;
-    console.log(obj_1.b) //2
-    //此时，如果取消一个变量对于原对象的引用，不会影响到另一个变量
+    console.log(obj_1.b) // 2
+    // 此时，如果取消一个变量对于原对象的引用，不会影响到另一个变量
     obj_2 = 2;
     console.log(obj_1); //{ a: 1, b: 2 }
-    //但是这种引用只局限于对象，如果2个变量指向同一个原始类型的值，那么，变量这时都是值的拷贝
+    // 但是这种引用只局限于对象，如果 2 个变量指向同一个原始类型的值，那么，变量这时都是值的拷贝
     var x = 1;
     var y = x;
     y = 2;
     console.log('x = ', x); //1
     console.log('y = ', y); //2
 }
-//1.4---表达式还是语句？
+// 1.4 --- 表达式还是语句？
 {
-    //行首{}：V8引擎规定为对象；但在eval语句(对字符串求值)中理解为一个代码块
-    //行首({})：V8引擎规定为对象；在eval语句理解为对象
-    console.log(eval('{foo: 123}')); //123
-    console.log(eval('({foo: 123})')); //{ foo: 123 }
+    // 行首 {} ： V8 引擎规定为对象；但在 eval 语句（对字符串求值）中理解为一个代码块
+    // 行首 ({}) ： V8 引擎规定为对象；在 eval 语句理解为对象
+    console.log(eval('{foo: 123}')); // 123
+    console.log(eval('({foo: 123})')); // { foo: 123 }
 }
 
-//2---属性的操作
-//2.1---属性的读取
+// 2 --- 属性的操作
+// 2.1 --- 属性的读取
 {
-    //读取对象的属性，有2种方法：使用点运算符(.)和使用方括号([])运算符
+    // 读取对象的属性，有 2 种方法：使用点运算符 (.) 和使用方括号 ([]) 运算符
     var obj = {
         p: 'hello'
     };
     console.log(obj.p); //hello
     console.log(obj['p']); //hello
-    //注意：如果使用方括号运算符，键名必须放在引号里面，否则会被当作变量处理
+    // 注意：如果使用方括号运算符，键名必须放在引号里面，否则会被当作变量处理
     var p_name = 'p';
     console.log(obj[p_name]); //hello
-    //使用点运算符，p是字符串
-    //使用方括号运算符，并不使用引号，p_name是一个变量
-    //方括号内部还可以使用表达式
+    // 使用点运算符，p是字符串
+    // 使用方括号运算符，并不使用引号，p_name是一个变量
+    // 方括号内部还可以使用表达式
     obj['1' + '2'] = 12;
     console.log(obj[12]); //12
     obj[1 + 2] = 3;
     console.log(obj[3]); //3
-    //数字键可以不加引号，因为会自动转成字符串
-    //注意：数值键名不能使用点运算符(会被当成小数点)，只能使用方括号运算符
+    // 数字键可以不加引号，因为会自动转成字符串
+    // 注意：数值键名不能使用点运算符（会被当成小数点），只能使用方括号运算符
 }
-//2.2---属性的赋值
+// 2.2 --- 属性的赋值
 {
-    //点运算符和方括号运算符，不仅可以用来读取值，还可以用来赋值
+    // 点运算符和方括号运算符，不仅可以用来读取值，还可以用来赋值
     var obj = {};
     obj.foo = 'hello';
     obj['bar'] = 'world';
-    //JavaScript允许属性的"后绑定"，即可以在任意时刻新增属性，没必要在定义对象的时候，就定义好属性
-    //等价于
+    // JavaScript 允许属性的"后绑定"，即可以在任意时刻新增属性，没必要在定义对象的时候，就定义好属性
+    // 等价于
     var obj_2 = {
         foo: 'hello',
         bar: 'world'
     };
 }
-//2.3---属性的查看
+// 2.3 --- 属性的查看
 {
-    //查看一个对象本身的所有属性，可以使用Object.keys()方法
+    // 查看一个对象本身的所有属性，可以使用 Object.keys() 方法
     var obj = {
-        key_1: 1,
-        key_2: 2
+        key1: 1,
+        key2: 2
     };
-    let key_array = Object.keys(obj);
-    console.log('[keys]--- = ', key_array); //[ 'key_1', 'key_2' ]
-    console.log('[keys]--- type = ', (key_array instanceof Array)); //true
+    let keyArray = Object.keys(obj);
+    console.log('[keys]--- = ', keyArray); // [ 'key1', 'key2' ]
+    console.log('[keys]--- type = ', (keyArray instanceof Array)); // true
 }
-//2.4---属性的删除：delete命令
+// 2.4 --- 属性的删除： delete 命令
 {
-    //delete命令用于删除对象的属性，删除成功后返回true
+    // object.delete(property) 用于删除对象的属性，删除成功后返回 true
+    // 参数 property --- 要删除的属性
+    // 返回值 --- 对于所有情况都是 true， 除非属性是一个不可配置的属性，在这种情况下，非严格模式返回 false
     var obj = {
         p: 1
     };
-    console.log('[delete]---', Object.keys(obj)); //[ 'p' ]
-    console.log('[delete]---', delete obj.p); //true
-    console.log('[delete]---', obj.p); //undefined
-    console.log('[delete]---', Object.keys(obj)); //[]
-    //注意：删除一个不存在的属性，delete不报错，而且返回true
+    console.log('[delete]---', Object.keys(obj)); // [ 'p' ]
+    console.log('[delete]---', delete obj.p); // true
+    console.log('[delete]---', obj.p); // undefined
+    console.log('[delete]---', Object.keys(obj)); // []
+    // 注意：删除一个不存在的属性， 非严格模式下 delete 不报错，而且返回 true
     var obj_2 = {};
-    console.log('[delete]---', delete obj_2.p); //true
-    //因此不能根据delete命令的结果，认定某个属性是存在的
-    //只有一种情况，delete命令会返回false，那就是该属性存在，且不得删除
+    console.log('[delete]---', delete obj_2.p); // true
+    // 因此不能根据 delete 命令的结果，认定某个属性是存在的
+    // 只有一种情况， delete 命令会返回 false ，那就是该属性存在，且不得删除
     var obj_3 = Object.defineProperty({}, 'p', {
         value: 123,
         configurable: false //属性不可删除
     });
-    console.log('[delete]---', delete obj_3.p); //false
-    //注意：delete命令只能删除对象本身的属性，无法删除继承的属性
+    console.log('[delete]---', delete obj_3.p); // false
+    // 注意： delete 命令只能删除对象本身的属性，无法删除继承的属性
     var obj_4 = {};
-    console.log('[delete]---', delete obj_4.toString); //true
-    console.log('[delete]---', obj_4.toString); //function toString() { [native code] }
-    //toString是对象obj_4继承的属性，虽然delete命令返回true，但该属性并没有被删除，依然存在
-    //即使delete返回true，该属性依然可能读取到值
+    console.log('[delete]---', delete obj_4.toString); // true
+    console.log('[delete]---', obj_4.toString); // function toString() { [native code] }
+    // toString 是对象obj_4继承的属性，虽然 delete 命令返回 true ，但该属性并没有被删除，依然存在
+    // 即使 delete 返回 true ，该属性依然可能读取到值
 }
 //2.5---属性是否存在：in运算符
 {
