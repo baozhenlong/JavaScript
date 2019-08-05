@@ -10,83 +10,82 @@
     console.log('[减法]---', '4' - '3'); //1
 }
 
-//2---强制转换
-//2.1---Number()
+// 2 --- 强制转换
+// 2.1 --- Number(Any)
 {
-    //可以将任意类型的值转化成数值
-    //参数是原始类型值
+    // 可以将任意类型的值转化成数值
+    // 参数是原始类型值
     {
-        //数值
+        // 数值
         {
-            //转换后还是原来的值
-            console.log('[Number]---数值', Number(324)); //324
+            // 转换后还是原来的值
+            console.log('[Number]---数值', Number(324)); // 324
         }
-        //字符串
+        // 字符串
         {
-            //如果可以被解析为数值，则转换为相应的数值
-            console.log('[Number]---字符串', Number('324')); //324
-            //如果不可以被解析为数值，返回NaN
-            console.log('[Number]---字符串', Number('324abc')); //NaN
-            //空字符串转为0
-            console.log('[Number]---字符串', Number('')); //0
-            //Number和parseInt
-            //都会自动过滤一个字符串前导和后缀的空格
-            console.log('[Number]---字符串', Number('\t\v\r12.34\n')); //12
-            console.log('[Number]---字符串', parseInt('\t\v\r12.34\n')); //12.34
-            //parseInt()---逐个解析字符
-            console.log('[Number]---字符串', parseInt('42 cats')); //42
-            //Number()---整体转换字符串的类型，只要有一个字符无法转成数值，整个字符串就会被转为NaN
-            console.log('[Number]---字符串', Number('42 cats')); //NaN
-            console.log('[Number]---字符串', Number('.12')); //0.12
-
+            // 如果可以被解析为数值， Number() 将判断是调用 parseInt() 还是 parseFloat() ，并转换为相应的数值
+            console.log('[Number]---字符串', Number('324')); // 324
+            // 如果不可以被解析为数值，返回 NaN
+            console.log('[Number]---字符串', Number('324abc')); // NaN
+            // 空字符串转为 0
+            console.log('[Number]---字符串', Number('')); // 0
+            // Number 和 parseInt
+            // 都会自动过滤一个字符串前导和后缀的空格
+            console.log('[Number]---字符串', Number('\t\v\r12.34\n')); // 12
+            console.log('[Number]---字符串', parseInt('\t\v\r12.34\n')); // 12.34
+            // parseInt() --- 逐个解析字符
+            console.log('[Number]---字符串', parseInt('42 cats')); // 42
+            // Number() --- 整体转换字符串的类型，只要有一个字符无法转成数值，整个字符串就会被转为 NaN
+            console.log('[Number]---字符串', Number('42 cats')); // NaN
+            console.log('[Number]---字符串', Number('.12')); // 0.12
         }
-        //布尔值
+        // 布尔值
         {
-            //true转成1，false转成0
+            // true 转成 1 ， false 转成 0
             console.log('[Number]---布尔值', Number(true)); //1
             console.log('[Number]---布尔值', Number(false)); //0
         }
-        //参数是undefined和null
+        // 参数是 undefined 和 null
         {
-            console.log('[Number]---undefined', Number(undefined)); //NaN
-            console.log('[Number]---null', Number(null)); //0
+            console.log('[Number]---undefined', Number(undefined)); // NaN
+            console.log('[Number]---null', Number(null)); // 0
         }
     }
-    //参数是对象
+    // 参数是对象
     {
-        //简单的规则：Number方法的参数是对象时，将返回NaN，除非是包含单个数值的数组
+        // 简单的规则： Number 方法的参数是对象时，将返回 NaN ，除非是包含单个数值的数组
         console.log('[Number]---对象', Number({
             a: 1
-        })); //NaN
-        console.log('[Number]---对象', Number([1, 2, 3])); //NaN
-        console.log('[Number]---对象', Number([5])); //5
-        //转换规则：
-        //第一步：调用对象自身的valueOf方法；如果返回原始类型的值，则直接对该值使用Number函数，不再进行后续步骤
-        //第二步：如果valueOf方法返回的还是对象，则改为调用对象自身的toString方法；
-        //如果toString方法返回原始类型的值，则对该值使用Number函数，不再进行后续步骤
-        //第三步：如果toString方法返回的是对象，就会报错
+        })); // NaN
+        console.log('[Number]---对象', Number([1, 2, 3])); // NaN
+        console.log('[Number]---对象', Number([5])); // 5
+        // 转换规则：
+        // 第一步：调用对象自身的 valueOf 方法；如果返回原始类型的值，则直接对该值使用 Number 函数，不再进行后续步骤
+        // 第二步：如果 valueOf 方法返回的还是对象，则改为调用对象自身的 toString 方法；
+        // 如果 toString 方法返回原始类型的值，则对该值使用 Number 函数，不再进行后续步骤
+        // 第三步：如果 toString 方法返回的是对象，就会报错
         var obj = {
             x: 1
         };
         console.log('[Number]---对象', Number(obj));
-        //等同于
+        // 等同于
         if (typeof obj.valueOf() === 'object') {
-            console.log('[Number]---对象，toString', Number(obj.toString())); //NaN
+            console.log('[Number]---对象，toString', Number(obj.toString())); // NaN
         } else {
             console.log('[Number]---对象，valueOf', Number(obj.valueOf()));
         }
-        //默认情况下，对象的valueOf方法返回对象本身，所以一般总是会调用toString方法，
-        //而toString方法返回对象的类型字符串(比如[object object])，所以结果为NaN
+        // 默认情况下，对象的 valueOf 方法返回对象本身，所以一般总是会调用 toString 方法，
+        // 而 toString 方法返回对象的类型字符串（比如 [object object] ），所以结果为 NaN
         console.log('[Number]---对象 自定义valueOf', Number({
             valueOf: function () {
                 return 2;
             }
-        })); //2
+        })); // 2
         console.log('[Number]---对象 自定义toString', Number({
             toString: function () {
                 return 3;
             }
-        })); //3
+        })); // 3
         console.log('[Number]---对象 自定义valueOf，toString', Number({
             valueOf: function () {
                 return 2;
@@ -94,57 +93,57 @@
             toString: function () {
                 return 3;
             }
-        })); //2
-        //valueOf方法先于toString方法执行
+        })); // 2
+        // valueOf方法先于 toString 方法执行
     }
 }
-//2.2---String()
+// 2.2 --- String()
 {
-    //可以将任意类型的值转换为字符串
-    //参数是原始类型值
+    // 可以将任意类型的值转换为字符串
+    // 参数是原始类型值
     {
-        //数值：转为相应的字符串
-        console.log('[String]---数值', String(1.2)); //1.2
-        console.log('[String]---数值', String(.2)); //0.2
-        //字符串：转换后还是原来的值
-        console.log('[String]---字符串', String('abc')); //"abc"
-        //布尔值：转为字符串"true","false"
-        console.log('[String]---布尔值', String(true)); //"true"
-        console.log('[String]---布尔值', String(false)); //"false"
-        //undefined：转为字符串"undefined"
-        console.log('[String]---undefined', String(undefined)); //"undefined"
-        //null：转为字符串"null"
-        console.log('[String]---null', String(null)); //"null"
+        // 数值：转为相应的字符串
+        console.log('[String]---数值', String(1.2)); // 1.2
+        console.log('[String]---数值', String(.2)); // 0.2
+        // 字符串：转换后还是原来的值
+        console.log('[String]---字符串', String('abc')); // "abc"
+        // 布尔值：转为字符串 "true" , "false"
+        console.log('[String]---布尔值', String(true)); // "true"
+        console.log('[String]---布尔值', String(false)); // "false"
+        // undefined：转为字符串 "undefined"
+        console.log('[String]---undefined', String(undefined)); // "undefined"
+        // null：转为字符串 "null"
+        console.log('[String]---null', String(null)); // "null"
     }
-    //参数是对象
+    // 参数是对象
     {
-        //String方法的参数如果是对象，返回一个类型字符串；参数是数值，返回该数组的字符串形式
+        // String 方法的参数如果是对象，返回一个类型字符串；参数是数组，返回该数组的字符串形式
         console.log('[String]---对象', String({
             a: 1
-        })); //"[object Object]"
-        console.log('[String]---对象', String([1, 2, 3])); //"1,2,3"
-        //String背后的转换规则，与Number方法基本相同，只是互换了valueOf方法和toString方法的执行顺序
-        //第一步：先调用对象自身的toString方法；如果返回原始类型的值，则对该值使用String函数，不再进行后续步骤
-        //第二步：如果toString方法返回的是对象，再调用对象自身的valueOf方法；
-        //如果valueOf方法返回原始类型的值，则对该值使用String函数，不再进行后续步骤
-        //第三步：如果valueOf方法返回的是对象，就会报错
+        })); // "[object Object]"
+        console.log('[String]---对象', String([1, 2, 3])); // "1,2,3"
+        // String 背后的转换规则，与 Number 方法基本相同，只是互换了 valueOf 方法和 toString 方法的执行顺序
+        // 第一步：先调用对象自身的 toString 方法；如果返回原始类型的值，则对该值使用 String 函数，不再进行后续步骤
+        // 第二步：如果 toString 方法返回的是对象，再调用对象自身的 valueOf 方法；
+        // 如果 valueOf 方法返回原始类型的值，则对该值使用 String 函数，不再进行后续步骤
+        // 第三步：如果 valueOf 方法返回的是对象，就会报错
         console.log('[String]---对象', String({
             a: 1
-        })); //"[object Object]"
+        })); // "[object Object]"
         //等同于
         console.log('[String]---对象', String({
             a: 1
-        }.toString())); //"[object Object]"
+        }.toString())); // "[object Object]"
         console.log('[String]---对象 自定义toString', String({
             toString: function () {
                 return 3;
             }
-        })); //"3"
+        })); // "3"
         console.log('[String]---对象 自定义valueOf', String({
             valueOf: function () {
                 return 2;
             }
-        })); //"[object Object]"
+        })); // "[object Object]"
         console.log('[String]---对象 自定义toString，valueOf', String({
             toString: function () {
                 return 3;
@@ -152,28 +151,28 @@
             valueOf: function () {
                 return 2;
             }
-        })); //"3"
-        //toString方法先于valueOf方法执行
+        })); // "3"
+        // toString 方法先于 valueOf 方法执行
     }
 }
-//2.3---Boolean()
+// 2.3 --- Boolean()
 {
-    //可以将任意类型的值转为布尔值
-    //除了以下5个值得转换结果为false，其他的值全部为true
-    //undefined
-    console.log('[Boolean]---undefined', Boolean(undefined)); //false
-    //null
-    console.log('[Boolean]---null', Boolean(null)); //false
-    //+0或-0
-    console.log('[Boolean]---0', Boolean(0)); //false
-    //NaN
-    console.log('[Boolean]---NaN', Boolean(NaN)); //false
-    //''：空字符串
-    console.log('[Boolean]---""', Boolean('')); //false
-    //注意：所有对象(包括空对象)的转换结果都是true
-    console.log('[Boolean]---{}', Boolean({})); //true
-    console.log('[Boolean]---[]', Boolean([])); //true
-    console.log('[Boolean]---布尔值对象', Boolean(new Boolean(false))); //true
+    // 可以将任意类型的值转为布尔值
+    // 除了以下 5 个值得转换结果为 false ，其他的值全部为 true
+    // undefined
+    console.log('[Boolean]---undefined', Boolean(undefined)); // false
+    // null
+    console.log('[Boolean]---null', Boolean(null)); // false
+    // +0 或 -0
+    console.log('[Boolean]---0', Boolean(0)); // false
+    // NaN
+    console.log('[Boolean]---NaN', Boolean(NaN)); // false
+    // ''：空字符串
+    console.log('[Boolean]---""', Boolean('')); // false
+    // 注意：所有对象（包括空对象）的转换结果都是 true
+    console.log('[Boolean]---{}', Boolean({})); // true
+    console.log('[Boolean]---[]', Boolean([])); // true
+    console.log('[Boolean]---布尔值对象', Boolean(new Boolean(false))); // true
 }
 
 //3---自动转换

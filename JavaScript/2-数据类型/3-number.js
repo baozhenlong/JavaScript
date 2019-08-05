@@ -176,88 +176,89 @@
     }
 }
 
-//5---与数值相关的全局方法
-//5.1---parseInt()
+// 5 --- 与数值相关的全局方法
+// 5.1 --- parseInt()
 {
-    //5.1.1---基本用法
+    // 5.1.1 --- 基本用法
     {
-        //parseInt方法用于将字符串转为整数
-        console.log("[parseInt]---基本用法= ", parseInt("123")); //123
-        //如果字符串头部有空格 ，空格会被自动去除
-        console.log("[parseInt]---基本用法= ", parseInt("   81")); //81
-        //如果parseInt的参数不是字符串，则会先转为字符串再转换
-        console.log("[parseInt]---基本用法= ", parseInt(1.23)); //1
-        //等价于
-        console.log("[parseInt]---基本用法= ", parseInt("1.23")); //1
-        //字符串转为整数的时候，是一个个字符依次转换，如果遇到不能转为数字的字符，就不再进行下去，返回已经转好的部分
-        console.log("[parseInt]---基本用法= ", parseInt("8a")); //8
-        console.log("[parseInt]---基本用法= ", parseInt("12**")); //12
-        console.log("[parseInt]---基本用法= ", parseInt("12.34")); //12
-        console.log("[parseInt]---基本用法= ", parseInt("15e2")); //15
-        console.log("[parseInt]---基本用法= ", parseInt("15px")); //15
-        //如果字符串的第一个字符不能转为数字(后面跟着数字的正负号除外)，返回NaN
-        console.log("[parseInt]---基本用法= ", parseInt("abc")); //NaN
-        console.log("[parseInt]---基本用法= ", parseInt(".3")); //NaN
-        console.log("[parseInt]---基本用法= ", parseInt("")); //NaN
-        console.log("[parseInt]---基本用法= ", parseInt("+")); //NaN
-        console.log("[parseInt]---基本用法= ", parseInt("+1")); //1
-        //如果字符串以0x或0X开头，将其按照十六进制解析
+        // parseInt 方法用于将字符串转为整数
+        console.log("[parseInt]---基本用法= ", parseInt("123")); // 123
+        // 如果字符串头部有空格 ，空格会被自动去除
+        console.log("[parseInt]---基本用法= ", parseInt("   81")); // 81
+        // 如果 parseInt 的参数不是字符串，则会先转为字符串再转换
+        console.log("[parseInt]---基本用法= ", parseInt(1.23)); // 1
+        // 等价于
+        console.log("[parseInt]---基本用法= ", parseInt("1.23")); // 1
+        // 字符串转为整数的时候，是一个个字符依次转换，如果遇到不能转为数字的字符，就不再进行下去，返回已经转好的部分
+        console.log("[parseInt]---基本用法= ", parseInt("8a")); // 8
+        console.log("[parseInt]---基本用法= ", parseInt("12**")); // 12
+        console.log("[parseInt]---基本用法= ", parseInt("12.34")); // 12
+        console.log("[parseInt]---基本用法= ", parseInt("15e2")); // 15
+        console.log("[parseInt]---基本用法= ", parseInt("15px")); // 15
+        // 如果字符串的第一个字符不能转为数字（后面跟着数字的正负号除外），返回 NaN
+        console.log("[parseInt]---基本用法= ", parseInt("abc")); // NaN
+        console.log("[parseInt]---基本用法= ", parseInt(".3")); // NaN
+        console.log("[parseInt]---基本用法= ", parseInt("")); // NaN
+        console.log("[parseInt]---基本用法= ", parseInt("+")); // NaN
+        console.log("[parseInt]---基本用法= ", parseInt("+1")); // 1
+        // 如果字符串以 0x 或 0X 开头，将其按照十六进制解析
         console.log("[parseInt]---基本用法= ", parseInt("0x10")); //16
-        //如果字符串以0开头，将其按照十进制解析
+        // 如果字符串以 0 开头，将其按照十进制解析
         console.log("[parseInt]---基本用法= ", parseInt("011")); //11
-        //parseInt会将科学计数法的表示方法视为字符串，因此导致一些奇怪的结果
+        // parseInt 会将科学计数法的表示方法视为字符串，因此导致一些奇怪的结果
         console.log("[parseInt]---基本用法= ", parseInt("1000000000000000000000.5")); //1e+21???
         console.log("[parseInt]---基本用法= ", parseInt("1e+21")); //1
         console.log("[parseInt]---基本用法= ", parseInt("0.00000008")); //0???
         console.log("[parseInt]---基本用法= ", parseInt("8e-7")); //8
     }
-    //5.1.2---进制转换
+    // 5.1.2 --- 进制转换
     {
-        //parseInt方法还可以接受第2个参数([2,36])；表示被解析的值的进制，返回该值对应的十进制数
-        //默认情况下，parseInt的第2个参数为10，即默认十进制转十进制
-        console.log("[parseInt]---进制转换= ", parseInt("1000")); //1000
-        //等价于
-        console.log("[parseInt]---进制转换= ", parseInt("1000", 10)); //1000
-        //指定进制
-        console.log("[parseInt]---进制转换= ", parseInt("1000", 2)); //8
-        console.log("[parseInt]---进制转换= ", parseInt("1000", 6)); //246
-        console.log("[parseInt]---进制转换= ", parseInt("1000", 8)); //512
-        //如果第2个参数不是数值，会自动转为一个整数；这个整数只有在2到36之间，才能得到有意义的结果，超出这个范围，则返回NaN
-        //如果第2个参数是0、undefined、null，则直接忽略
-        console.log("[parseInt]---进制转换= ", parseInt("10", 1)); //NaN
-        console.log("[parseInt]---进制转换= ", parseInt("10", 37)); //NaN
-        console.log("[parseInt]---进制转换= ", parseInt("10", 0)); //10
-        console.log("[parseInt]---进制转换= ", parseInt("10", null)); //10
-        console.log("[parseInt]---进制转换= ", parseInt("10", undefined)); //10
-        //如果字符串包含对于指定进制无意义的字符，则从最高位开始，只返回可以转换的数值；如果最高位无法转换，则直接返回NaN
-        console.log("[parseInt]---进制转换= ", parseInt("1546", 2)); //1
-        console.log("[parseInt]---进制转换= ", parseInt("546", 2)); //NaN
+        // parseInt 方法还可以接受第 2 个参数 ([2,36]) ；表示被解析的值的进制，返回该值对应的进制数
+        // 默认情况下，parseInt的第 2 个参数为 10 ，即默认十进制转十进制
+        console.log("[parseInt]---进制转换= ", parseInt("1000")); // 1000
+        // 等价于
+        console.log("[parseInt]---进制转换= ", parseInt("1000", 10)); // 1000
+        // 指定进制
+        console.log("[parseInt]---进制转换= ", parseInt("1000", 2)); // 8
+        console.log("[parseInt]---进制转换= ", parseInt("1000", 6)); // 246
+        console.log("[parseInt]---进制转换= ", parseInt("1000", 8)); // 512
+        // 如果第 2 个参数不是数值，会自动转为一个整数；这个整数只有在 2 到 36 之间，才能得到有意义的结果，超出这个范围，则返回 NaN
+        // 如果第 2 个参数是 0 、 undefined 、 null ，则直接忽略
+        console.log("[parseInt]---进制转换= ", parseInt("10", 1)); // NaN
+        console.log("[parseInt]---进制转换= ", parseInt("10", 37)); // NaN
+        console.log("[parseInt]---进制转换= ", parseInt("10", 0)); // 10
+        console.log("[parseInt]---进制转换= ", parseInt("10", null)); // 10
+        console.log("[parseInt]---进制转换= ", parseInt("10", undefined)); // 10
+        // 如果字符串包含对于指定进制无意义的字符，则从最高位开始，只返回可以转换的数值；如果最高位无法转换，则直接返回 NaN
+        console.log("[parseInt]---进制转换= ", parseInt("1546", 2)); // 1
+        console.log("[parseInt]---进制转换= ", parseInt("546", 2)); // NaN
     }
 }
-//5.2---parseFloat()
+// 5.2 --- parseFloat()
 {
-    //parseFloat()用于将一个字符串转为浮点数
-    console.log("[parseFloat]---= ", parseFloat("3.14")); //3.14
-    //如果字符串符合科学计数法，则会进行相应的转换
-    console.log("[parseFloat]---= ", parseFloat("314e-2")); //3.14
-    console.log("[parseFloat]---= ", parseFloat("0.0314E+2")); //3.14
-    //如果字符串包含不能转为浮点数的字符，则不进行往后转换，返回已经转好的部分
-    console.log("[parseFloat]---= ", parseFloat("3.14more")); //3.14
-    //parseFloat会自动过滤字符串前导的空格
-    console.log("[parseFloat]---= ", parseFloat("\t\v\r12.34\n")); //12.14
-    //如果参数不是字符串，或者字符串的第一个字符不能转化为浮点数，则返回NaN
-    console.log("[parseFloat]---= ", parseFloat("[]")); //NaN
-    console.log("[parseFloat]---= ", parseFloat("ff2")); //NaN
-    console.log("[parseFloat]---= ", parseFloat("")); //NaN
-    //这些特点使得parseFloat的转换结果不同于Number函数
-    console.log("[parseFloat]---= ", parseFloat(true)); //NaN
-    console.log("[Number]---= ", Number(true)); //1
-    console.log("[parseFloat]---= ", parseFloat(null)); //NaN
-    console.log("[Number]---= ", Number(null)); //0
-    console.log("[parseFloat]---= ", parseFloat("")); //NaN
-    console.log("[Number]---= ", Number("")); //0
-    console.log("[parseFloat]---= ", parseFloat("123.45#")); //123.45
-    console.log("[Number]---= ", Number("123.45#")); //NaN
+    // parseFloat() 用于将一个字符串转为浮点数
+    // 如果 parseFloat 的参数不是字符串，则会先转为字符串再转换
+    console.log("[parseFloat]---= ", parseFloat("3.14")); // 3.14
+    // 如果字符串符合科学计数法，则会进行相应的转换
+    console.log("[parseFloat]---= ", parseFloat("314e-2")); // 3.14
+    console.log("[parseFloat]---= ", parseFloat("0.0314E+2")); // 3.14
+    // 如果字符串包含不能转为浮点数的字符，则不进行往后转换，返回已经转好的部分
+    console.log("[parseFloat]---= ", parseFloat("3.14more")); // 3.14
+    // parseFloat会自动过滤字符串前导的空格
+    console.log("[parseFloat]---= ", parseFloat("\t\v\r12.34\n")); // 12.14
+    // 如果参数不是字符串，或者字符串的第一个字符（不是数字字符、负号、小数点）不能转化为浮点数，则返回 NaN
+    console.log("[parseFloat]---= ", parseFloat("[]")); // NaN
+    console.log("[parseFloat]---= ", parseFloat("ff2")); // NaN
+    console.log("[parseFloat]---= ", parseFloat("")); // NaN
+    // 这些特点使得 parseFloat 的转换结果不同于 Number 函数
+    console.log("[parseFloat]---= ", parseFloat(true)); // NaN
+    console.log("[Number]---= ", Number(true)); // 1
+    console.log("[parseFloat]---= ", parseFloat(null)); // NaN
+    console.log("[Number]---= ", Number(null)); // 0
+    console.log("[parseFloat]---= ", parseFloat("")); // NaN
+    console.log("[Number]---= ", Number("")); // 0
+    console.log("[parseFloat]---= ", parseFloat("123.45#")); // 123.45
+    console.log("[Number]---= ", Number("123.45#")); // NaN
 }
 // 5.3 --- isNaN()
 {
