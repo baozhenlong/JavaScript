@@ -20,92 +20,93 @@
 
 // 2 --- 静态方法
 {
-    // 2.1 --- Math.abs()
+    // 2.1 --- Math.abs(value)
     {
         // 返回参数值的绝对值
         console.log('[静态方法]---abs', Math.abs(1)); // 1
         console.log('[静态方法]---abs', Math.abs(-1)); // 1
     }
-    // 2.2 --- Math.max() ， Math.min()
+    // 2.2 --- Math.max([value1[, value2[, ...]]]) ， Math.min()
     {
-        // Math.max() 
-        // 返回参数之中最大的那个值
-        console.log('[静态方法]---max', Math.max(2, -1, 5)); // 5
-        // Math.min()
-        // 返回参数之中最小的那个值
-        console.log('[静态方法]---min', Math.min(2, -1, 5)); // -1
-        // 如果参数为空， max 返回 -Infinity ； min 返回 Infinity
-        console.log('[静态方法]---max', Math.max()); // -Infinity
-        console.log('[静态方法]---min', Math.min()); // Infinity
+        // Math.max([value1[, value2[, ...]]])
+        {
+            // 返回参数之中最大的那个值
+            // 如果没有参数，则返回 -Infinity
+            // 如果有某个参数为 NaN，或是不能转换成数字的非数字值，则返回 NaN
+            console.log('[静态方法]---max no arguments', Math.max()); // -Infinity
+            console.log('[静态方法]---max not number', Math.max(1, 'a', 2)); // NaN
+            console.log('[静态方法]---max', Math.max(2, -1, 5)); // 5
+        }
+        // Math.min([value1[, value2[, ...]]])
+        {
+            // 返回参数之中最小的那个值
+            // 如果没有参数，则返回 Infinity
+            // 如果有某个参数为 NaN，或是不能转换成数字的非数字值，则返回 NaN
+            console.log('[静态方法]---min no arguments', Math.min()); // Infinity
+            console.log('[静态方法]---min not number', Math.min(1, 'a', 2)); // NaN
+            console.log('[静态方法]---min', Math.min(2, -1, 5)); // -1
+        }
+        // 例子：确定一组数的最值，避免多余的循环和 if 语句
+        let values = [1, 2, 3];
+        console.log('[静态方法]---求最值 max', Math.max.apply(Math, values)); // 3
     }
     // 2.3 --- Math.floor() ， Math.ceil()
     {
-        //Math.floor：返回小于参数值的最大整数(地板值)
-        console.log('[静态方法]---floor', Math.floor(3.2));
-        //3
-        console.log('[静态方法]---floor', Math.floor(-3.2));
-        //-4
-        //Math.ceil：返回大于参数值的最小整数(天花板值)
-        console.log('[静态方法]---ceil', Math.ceil(3.2));
-        //4
-        console.log('[静态方法]---ceil', Math.ceil(-3.2));
-        //-3
-        //这两个方法可以结合起来，实现一个总是返回数值的整数部分的函数
-        function to_integer(x) {
+        // Math.floor(value)
+        {
+            // 返回小于参数值的最大整数（地板值）；向下舍入
+            // 返回值 <= value
+            console.log('[静态方法]---floor', Math.floor(3.2)); // 3
+            console.log('[静态方法]---floor', Math.floor(-3.2)); // -4
+        }
+        // Math.ceil(value)
+        {
+            // 返回大于参数值的最小整数（天花板值）；向上舍入
+            // 返回值 >= value
+            console.log('[静态方法]---ceil', Math.ceil(3.2)); // 4
+            console.log('[静态方法]---ceil', Math.ceil(-3.2)); // -3
+        }
+        // 这两个方法可以结合起来，实现一个总是返回数值的整数部分的函数
+        function toInteger(x) {
             x = Number(x);
             return x < 0 ? Math.ceil(x) : Math.floor(x);
         }
-        console.log('[静态方法]---floor ceil', to_integer(3.2));
-        //3
-        console.log('[静态方法]---floor ceil', to_integer(3.8));
-        //3
-        console.log('[静态方法]---floor ceil', to_integer(-3.2));
-        //-3
-        console.log('[静态方法]---floor ceil', to_integer(-3.8));
-        //-3
+        console.log('[静态方法]---floor ceil', toInteger(3.2)); // 3
+        console.log('[静态方法]---floor ceil', toInteger(3.8)); // 3
+        console.log('[静态方法]---floor ceil', toInteger(-3.2)); // 3
+        console.log('[静态方法]---floor ceil', toInteger(-3.8)); // 3
     }
-    //2.4---Math.round()
+    // 2.4 --- Math.round()
     {
-        //用于四舍五入
-        console.log('[静态方法]---round', Math.round(0.1));
-        //0
-        console.log('[静态方法]---round', Math.round(0.5));
-        //1
-        console.log('[静态方法]---round', Math.round(0.6));
-        //1
-        //等同于
-        function to_round(x) {
+        // 对一个数进行标准舍入，四舍五入为最接近的整数
+        // 如果参数的小数部分 > 0.5 ，则参数将四舍五入为具有较高绝对值的整数
+        // 如果参数的小数部分 < 0.5 ，则参数将四舍五入为具有较低绝对值的整数
+        // 如果参数的小数部分 = 0.5 ，则参数将四舍五入为正无穷方向的下一个整数
+        console.log('[静态方法]---round', Math.round(0.1)); // 0
+        console.log('[静态方法]---round', Math.round(0.5)); // 1
+        console.log('[静态方法]---round', Math.round(0.6)); // 1
+        // 等同于
+        function toRound(x) {
             return Math.floor(x + 0.5);
         }
-        console.log('[静态方法]---round', to_round(0.1));
-        //0
-        console.log('[静态方法]---round', to_round(0.5));
-        //1
-        console.log('[静态方法]---round', to_round(0.6));
-        //1
-        //注意：它对负数的处理(主要是对0.5的处理)
-        console.log('[静态方法]---round', Math.round(-1.1));
-        //-1
-        console.log('[静态方法]---round', Math.round(-1.5));
-        //-1
-        console.log('[静态方法]---round', Math.round(-1.6));
-        //-2
+        console.log('[静态方法]---round', toRound(0.1)); // 0
+        console.log('[静态方法]---round', toRound(0.5)); // 1
+        console.log('[静态方法]---round', toRound(0.6)); // 1
+        //注意：它对负数的处理(主要是对 0.5 的处理)
+        console.log('[静态方法]---round', Math.round(-1.1)); // -1
+        console.log('[静态方法]---round', Math.round(-1.5)); // -1
+        console.log('[静态方法]---round', Math.round(-1.6)); // -2
     }
-    //2.5---Math.pow()
+    // 2.5 --- Math.pow(base, exponent)
     {
-        //返回以第一个参数为底数，第二个参数为幂的指数值
-        console.log('[静态方法]---pow', Math.pow(2, 2));
-        //4
+        // 返回以第一个参数为底数，第二个参数为幂的指数值
+        // 参数 base ：底数
+        // 参数 exponent ：指数
+        console.log('[静态方法]---pow', Math.pow(2, 2)); // 4
         //等同于
-        console.log('[静态方法]---pow', 2 ** 2);
-        //4
-        console.log('[静态方法]---pow', Math.pow(2, 3));
-        //8
-        //等同于
-        console.log('[静态方法]---pow', 2 ** 3);
-        //8
+        console.log('[静态方法]---pow', 2 ** 2); // 4
     }
-    //2.6---Math.sqrt()
+    // 2.6 --- Math.sqrt()
     {
         //返回参数值的平方根
         //如果参数是一个负值，则返回NaN
@@ -126,7 +127,7 @@
         console.log('[静态方法]---log', Math.log(8) / Math.LN2);
         //3
     }
-    //2.8---Math.exp()
+    // 2.8 --- Math.exp()
     {
         //返回常数e参数次方
         console.log('[静态方法]---exp', Math.E);
@@ -134,19 +135,20 @@
         console.log('[静态方法]---exp', Math.exp(1));
         //2.718281828459045
     }
-    //2.9---Math.random()
+    // 2.9 --- Math.random()
     {
-        //返回0到1之间的一个伪随机数，可能等于0，但是一定小于1
-        //任意范围的随机数生成函数
-        function get_random_arbitrary(min, max) {
+        // 返回值 [0, 1)
+        // 返回 0 到 1 之间的一个伪随机数，可能等于 0 ，但是一定小于 1
+        // 任意范围的随机数生成函数
+        function getRandomArbitrary(min, max) {
             return Math.random() * (max - min) + min;
         }
-        //任意范围的随机整数生成函数
-        function get_random_int(min, max) {
+        // 任意范围的随机整数生成函数
+        function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1) + min);
         }
-        //返回随机字符
-        function random_str(len) {
+        // 返回随机字符
+        function randomStr(len) {
             var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             alphabet += 'abcdefghijklmnopqrstuvwxyz';
             alphabet += '0123456789-_';
