@@ -1,48 +1,44 @@
-//---Math对象
+// --- Math对象
 {
-    //Math是JavaScript的原生对象，提供各种数学功能
-    //该对象不是构造函数，不能生成实例，所有的属性和方法都必须在Math对象上调用
+    // Math 是 JavaScript 的原生对象，提供各种数学功能
+    // 该对象不是构造函数，不能生成实例，所有的属性和方法都必须在 Math 对象上调用
 }
 
-//1---静态属性
+// 1 --- 静态属性
 {
-    //Math对象的静态属性，提供以下一些数学常数
-    //Math.E：常数e
-    //Math.LN2：2的自然对数
-    //Math.LN10：10的自然对数
-    //Math.LOG2E：以2为底的e的对数
-    //Math.LOG10E：以10为底的e的对数
-    //Math.PI：常数π
-    //Math.SQRT1_2：0.5的平方根
-    //Math.SQRT2：2的平方根
-    //这些属性都是只读的，不能修改
+    // Math对象的静态属性，提供以下一些数学常数
+    // Math.E ：常数 e
+    // Math.LN2 ： 2 的自然对数
+    // Math.LN10 ： 10 的自然对数
+    // Math.LOG2E ：以 2 为底的 e 的对数
+    // Math.LOG10E ：以 10 为底的 e 的对数
+    // Math.PI ：常数 π
+    // Math.SQRT1_2 ： 0.5 的平方根
+    // Math.SQRT2  ： 2 的平方根
+    // 这些属性都是只读的，不能修改
 }
 
-//2---静态方法
+// 2 --- 静态方法
 {
-    //2.1---Math.abs()
+    // 2.1 --- Math.abs()
     {
-        //返回参数值的绝对值
-        console.log('[静态方法]---abs', Math.abs(1));
-        //1
-        console.log('[静态方法]---abs', Math.abs(-1));
-        //1
+        // 返回参数值的绝对值
+        console.log('[静态方法]---abs', Math.abs(1)); // 1
+        console.log('[静态方法]---abs', Math.abs(-1)); // 1
     }
-    //2.2---Math.max()，Math.min()
+    // 2.2 --- Math.max() ， Math.min()
     {
-        //Math.max()：返回参数之中最大的那个值
-        console.log('[静态方法]---max', Math.max(2, -1, 5));
-        //5
-        //Math.min()：返回参数之中最小的那个值
-        console.log('[静态方法]---min', Math.min(2, -1, 5));
-        //-1
-        //如果参数为空，max返回-Infinity；min返回Infinity
-        console.log('[静态方法]---max', Math.max());
-        //-Infinity
-        console.log('[静态方法]---min', Math.min());
-        //Infinity
+        // Math.max() 
+        // 返回参数之中最大的那个值
+        console.log('[静态方法]---max', Math.max(2, -1, 5)); // 5
+        // Math.min()
+        // 返回参数之中最小的那个值
+        console.log('[静态方法]---min', Math.min(2, -1, 5)); // -1
+        // 如果参数为空， max 返回 -Infinity ； min 返回 Infinity
+        console.log('[静态方法]---max', Math.max()); // -Infinity
+        console.log('[静态方法]---min', Math.min()); // Infinity
     }
-    //2.3---Math.floor()，Math.ceil()
+    // 2.3 --- Math.floor() ， Math.ceil()
     {
         //Math.floor：返回小于参数值的最大整数(地板值)
         console.log('[静态方法]---floor', Math.floor(3.2));
