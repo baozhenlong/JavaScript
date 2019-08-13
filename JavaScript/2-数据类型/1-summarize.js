@@ -17,29 +17,29 @@
     //函数其实是处理数据的方法，JavaScript把它当成一种数据类型，可以赋值给变量
 }
 
-//2---typeof运算符
+// 2 --- typeof 运算符
 {
-    //JavaScript有3种方法，可以确定一个值到底是什么类型
-    //typeof运算、instanceof运算符、Object.prototype.toString方法
-    //typeof运算符可以返回一个值的数据类型
-    //数值返回"number"
-    console.log(typeof 123); //"number"
-    //字符串返回"string"
-    console.log(typeof "123"); //"string"
-    //布尔值返回"boolean"
-    console.log(typeof false); //"boolean"
-    //函数返回"function"
+    // JavaScript 有 3 种方法，可以确定一个值到底是什么类型
+    // typeof 运算、 instanceof 运算符、 Object.prototype.toString 方法
+    // typeof 运算符可以返回一个值的数据类型
+    // 数值返回 "number"
+    console.log(typeof 123); // "number"
+    // 字符串返回 "string"
+    console.log(typeof "123"); // "string"
+    // 布尔值返回 "boolean"
+    console.log(typeof false); // "boolean"
+    // 函数返回 "function"
     function f() {}
-    console.log(typeof f); //"function"
-    //undefined返回"undefined"
-    console.log(typeof undefined); //"undefined"
-    //直接使用未声明的变量会报错；但是放在typeof后面，就不报错了
+    console.log(typeof f); // "function"
+    // undefined 返回 "undefined"
+    console.log(typeof undefined); // "undefined"
+    // 直接使用未声明的变量会报错；但是放在typeof后面，就不报错了
     if (typeof v === "undefined") {
         console.log("v is undefined");
     }
-    //对象返回"object"
-    console.log(typeof {}); //"object"
-    console.log(typeof []); //"object"
-    //null返回"object"
-    console.log(typeof null); //"object"
+    // 对象返回 "object"
+    console.log(typeof {}); // "object"
+    console.log(typeof []); // "object"
+    // null 返回 "object"
+    console.log(typeof null); // "object"
 }
