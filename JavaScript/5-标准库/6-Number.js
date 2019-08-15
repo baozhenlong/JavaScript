@@ -1,15 +1,13 @@
-//---Number对象
+// --- Number对象
 
-//1---概述
+// 1 --- 概述
 {
-    //Number对象是数值对应的包装对象，
-    //作为构造函数使用：用于生成值为数值的对象
+    // Number 对象是数值对应的包装对象，
+    // 作为构造函数使用：用于生成值为数值的对象
     var n = new Number(1);
-    console.log('[概述]---', typeof n);
-    //'object'
-    //作为工具函数使用：可以将任何类型的值转为数值
-    console.log('[概述]---', Number(true));
-    //1
+    console.log('[概述]---', typeof n); // 'object'
+    // 作为工具函数使用：可以将任何类型的值转为数值
+    console.log('[概述]---', Number(true)); // 1
 }
 
 //2---静态属性

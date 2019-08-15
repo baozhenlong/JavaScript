@@ -377,6 +377,7 @@
 
 // 5 --- 绑定 this 的方法
 {
+    // this 不能被赋值，但可以被 call / apply 改变
     // this 的动态切换，固然为 JavaScript 创造了巨大的灵活性，但也使得编程变得困难和模糊
     // 有时，需要把 this 固定下来，避免出现意想不到的情况
     // JavaScript 提供了 call 、 apply 、 bind 这 3 个方法，来切换 / 固定 this 的指向
