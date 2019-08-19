@@ -1,49 +1,150 @@
-//---属性描述对象
+// --- 属性描述对象
 
-//1---概述
+// 1 --- 概述
 {
-    //JavaScript提供了一个内部数据结构，用来描述对象的属性，控制它的行为，比如该属性是否可写、可遍历等
-    //这个内部数据结构称为：属性描述对象
-    //每个属性都有自己对应的属性描述对象，保存该属性的一些元信息
-    //属性描述对象提供6个元属性
+    // JavaScript 提供了一个内部数据结构，用来描述对象的属性，控制它的行为，比如该属性是否可写、可遍历等
+    // 这个内部数据结构称为：属性描述对象
+    // 每个属性都有自己对应的属性描述对象，保存该属性的一些元信息
+    // 属性描述对象提供 6 个元属性
     {
-        var attributes_obj = {
+        var attributesObj = {
             value: 123,
-            //表示该属性的属性值，默认为undefined
+            // 表示该属性的属性值，默认为 undefined
             writable: false,
-            //表示属性值是否可写，是一个布尔值，默认为true
+            // 表示属性值是否可写，是一个布尔值，默认为 true
             enumerable: true,
-            //表示该属性是否可遍历，是一个布尔值，默认为true
-            //如果设为false，会使得某些操作(比如for...in循环、Object.keys())跳过该属性
+            // 表示该属性是否可遍历，是一个布尔值，默认为 true
+            // 如果设为 false ，会使得某些操作( 比如 for...in 循环、 Object.keys() )跳过该属性
             configurable: false,
-            //表示可配置性，是一个布尔值，默认为true
-            //如果设为false，将组织某些操作改写属性，比如无法删除该属性，也不得改变该属性的属性描述对象(value属性除外)
-            //configurable属性控制了属性描述对象的可写性
+            // 表示可配置性，是一个布尔值，默认为 true
+            // 如果设为 false ，将阻止某些操作改写属性，比如无法删除该属性，也不得改变该属性的属性描述对象( value 属性除外 )
+            // configurable 属性控制了属性描述对象的可写性
             get: undefined,
-            //表示该属性的取值函数(getter)，是一个函数，默认为undefined
+            // 表示该属性的取值函数(getter)，是一个函数，默认为 undefined
             set: undefined
-            //表示该属性的存值函数(setter)，是一个函数，默认为undefined
+            // 表示该属性的存值函数(setter)，是一个函数，默认为 undefined
         };
+    }
+
+    // ECMAScript 中有两种属性：数据属性和访问器属性
+    {
+        // 数据属性
+        {
+            // 包含一个数据值的位置，在这个位置可以读取和写入值
+            // 数据属性的 4 个描述其行为的特性
+            // 特性 ---1--- [[Configurable]]
+            {
+                // 表示能否通过 delete 删除属性，从而重新定义属性
+                // 表示能否修改属性的特性
+                // 表示能否把属性修改为访问器属性
+                // 默认值为 true
+            }
+            // 特性 ---2--- [[Enumerable]]
+            {
+                // 表示能否通过 for...in 循环返回属性（对象的枚举属性）
+                // 默认值为 true
+            }
+            // 特性 ---3--- [[Writable]]
+            {
+                // 表示能否修改属性的值
+                // 默认值为 true
+            }
+            // 特性 ---4--- [[Value]]
+            {
+                // 包含这个属性的数据值
+                // 读取属性时，从这个位置读
+                // 写入属性时，把新值保存在这个位置
+                // 默认值为 undefined
+            }
+        }
+
+        // 访问器属性
+        {
+            // 不包含数据值，包含一对 getter 和 setter 函数（这两个函数不是必需）
+            // 在读取访问器属性时，会调用 getter 函数，这个函数负责返回有效的值
+            // 在写入访问器属性时，会调用 setter 函数，并传入新值，这个函数负责决定如何处理数据
+            // 访问器的 4 个 特性
+            // 特性 ---1--- [[Configurable]]
+            {
+                // 表示能否通过 delete 删除属性，从而重新定义属性
+                // 表示能否修改属性的特性
+                // 或者能否把属性改为访问器属性
+            }
+            // 特性 ---2--- [[Enumerable]]
+            {
+                // 表示能否通过 for...in 循环返回属性（对象的枚举属性）
+            }
+            // 特性 ---3--- [[Get]]
+            {
+                // 在读取属性时调用的函数，默认值为 undefined
+            }
+            // 特性 ---4--- [[Set]]
+            {
+                // 在写入属性时调用的函数，默认值为 undefined
+            }
+            // 访问器属性不能直接定义，必须使用 Object.defineProperty() 来定义
+            // 例子---使用访问器属性的常见方式：设置一个属性的值，会导致其他属性发生变化
+            {
+                let book = {
+                    // 定义两个默认属性
+                    _year: 2004, // _下划线表示只能通过对象方法访问的属性
+                    edition: 1
+                };
+                // 定义一个访问器属性
+                Object.defineProperty(book, 'year', {
+                    get() {
+                        console.log('[get]---_year', this._year);
+                        return this._year;
+                    },
+                    set(value) {
+                        if (value > this._year) {
+                            console.log('[set]---value', value);
+                            this._year = value;
+                            this.edition += value - 2004;
+                        }
+                    }
+                });
+                // year 和 _year 是两个不同的属性
+                book.year = 2006; // set 2006
+                console.log('[访问器属性]---edition', book.edition); // 3
+                console.log('[访问器属性]---year', book.year); // get 2006
+            }
+        }
     }
 }
 
-//2---Object.getOwnPropertyDescriptor()
+// 2 --- Object.getOwnPropertyDescriptor(obj, propertyName)
 {
-    //获取属性描述对象
-    //它的第一个参数是目标对象，第二个参数是一个字符串，对应目标对象的某个属性名
+    // 获取属性的描述对象
+    // 参数 obj ：属性所在的对象
+    // 参数 propertyName ：要读取其描述对象的属性名称
+    // 返回值 ：obj
     var obj = {
         p: 'a'
     };
-    console.log('[getOwnPropertyDescriptor]---', Object.getOwnPropertyDescriptor(obj, 'p'));
-    // { 
-    //     value: 'a',
-    //     writable: true,
-    //     enumerable: true,
-    //     configurable: true 
-    // }
-    //注意：getOwnPropertyDescriptor方法只能用于对象自身的属性，不能用于继承的属性
-    console.log('[getOwnPropertyDescriptor]---', Object.getOwnPropertyDescriptor(obj, 'toString'));
-    //undefined
+    // 如果是数据属性，这个对象的属性有 configurable 、 enumerable 、 writable 、 value
+    {
+        console.log('[getOwnPropertyDescriptor]---数据属性', Object.getOwnPropertyDescriptor(obj, 'p'));
+        // value: 'a',
+        // writable: true,
+        // enumerable: true,
+        // configurable: true
+    }
+    // 如果是访问器属性，这个对象的属性有 configurable 、 enumerable 、 get 、 set
+    {
+        Object.defineProperty(obj, 'msg', {
+            get() {},
+            set(value) {}
+        });
+        console.log('[getOwnPropertyDescriptor]---访问器属性', Object.getOwnPropertyDescriptor(obj, 'msg'));
+        // get: [Function: get],
+        // set: [Function: set],
+        // enumerable: false,
+        // configurable: false
+    }
+    // 注意：getOwnPropertyDescriptor方法只能用于对象自身的属性，不能用于继承的属性
+    console.log('[getOwnPropertyDescriptor]---自身属性', Object.getOwnPropertyDescriptor(obj, 'toString'));
+    // undefined
 }
 
 //3---Object.getOwnPropertyNames()
@@ -69,51 +170,56 @@
     //上面代码中，数组自身的length属性是不可遍历的，Object.keys不会返回该属性
 }
 
-//4---Object.defineProperty()，Object.defineProperties()
+// 4 --- Object.defineProperty() , Object.defineProperties()
 {
-    //defineProperty方法允许通过属性描述对象，定义或修改一个属性，然后返回修改后的对象
-    //接受3个参数
-    //object：属性所在的对象
-    //property_name：字符串，表示属性名
-    //attributes_object：属性描述对象
-    //如果属性已存在，Object.defineProperty方法相当于更新该属性的属性描述对象
-    var obj = Object.defineProperty({}, 'p', {
-        value: 123,
-        writable: false,
-        enumerable: true,
-        configurable: false
-    });
-    console.log('[defineProperty]---', obj.p);
-    //123
-    obj.p = 456;
-    console.log('[defineProperty]---', obj.p);
-    //123
-    //如果一次性定义或修改多个属性，可以使用Object.defineProperties方法
-    obj = Object.defineProperties({}, {
-        p_1: {
+    // 4.1 --- defineProperty(obj, propName, descriptor)
+    {
+        // 允许通过属性描述对象，定义或修改一个属性，然后返回修改后的对象
+        // 参数 obj (Obejct) ：属性所在的对象
+        // 参数 propName (String) ：属性名
+        // 参数 descriptor ：属性描述对象；描述对象必须是 Configurable 、 Enumerable 、 Writable 、 Value 中的一个或多个
+        // 返回值 ：obj
+        // 如果属性已存在，相当于更新该属性的属性描述对象
+        var obj = Object.defineProperty({}, 'p', {
             value: 123,
-            enumerable: true
-        },
-        p_2: {
-            value: 'abc',
-            enumerable: true
-        },
-        p_3: {
-            get: function () {
-                return this.p_1 + this.p_2;
-            },
+            writable: false,
             enumerable: true,
-            configurable: true
-        }
-    });
-    console.log('[defineProperties]---', obj.p_1);
-    //123
-    console.log('[defineProperties]---', obj.p_2);
-    //"abc"
-    console.log('[defineProperties]---', obj.p_3);
-    //"123abc"
-    //注意：一旦定义了取值函数get或存值函数set，就不能将writable属性设为true或同时定义value属性，否则会报错
-    //defineProperty和defineProperties参数里面的属性描述对象，writable、configurable、enumerable这3个属性的默认值都为false
+            configurable: false
+        });
+        console.log('[defineProperty]---', obj.p); // 123
+        obj.p = 456;
+        console.log('[defineProperty]---', obj.p); // 123
+    }
+
+    // 4.2 --- defineProperties(obj, descriptors)
+    {
+        // 一次性定义或修改多个属性
+        // 参数 obj ：需要添加或修改属性的对象
+        // 参数 descriptors ：包含一个或多个属性描述对象；每个描述对象描述一个数据属性或访问器属性
+        // 返回值 obj
+        obj = Object.defineProperties({}, {
+            p1: {
+                value: 123,
+                enumerable: true
+            },
+            p2: {
+                value: 'abc',
+                enumerable: true
+            },
+            p3: {
+                get: function () {
+                    return this.p_1 + this.p_2;
+                },
+                enumerable: true,
+                configurable: true
+            }
+        });
+        console.log('[defineProperties]---', obj.p1); // 123
+        console.log('[defineProperties]---', obj.p2); // "abc"
+        console.log('[defineProperties]---', obj.p3); // "123abc"
+    }
+    // 注意：一旦定义了取值函数 get 或存值函数 set ，就不能将 writable 属性设为 true 或同时定义 value 属性，否则会报错
+    // defineProperty 和 defineProperties 参数里面的属性描述对象， writable 、 configurable 、 enumerable 这 3 个属性的默认值都为 false
     Object.defineProperty(obj, 'foo', {});
     console.log('[defineProperty]---', Object.getOwnPropertyDescriptor(obj, 'foo'));
     // { 
