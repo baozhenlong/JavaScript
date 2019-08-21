@@ -217,48 +217,42 @@
         //null
         //match方法还可以使用正则表达式作为参数
     }
-    //4.11---String.prototype.search()，String.prototype.replace()
+    // 4.11 --- String.prototype.search() ， String.prototype.replace()
     {
         //search：用法基本等同于match，但是返回值为匹配的第一个位置
         //如果没有找到匹配，则返回-1
-        console.log('[实例方法]---search', 'cat, bat, sat, fat'.search('at'));
-        //1
-        //replace：用于替换匹配的子字符串，一般情况下只替换第一个匹配(除非使用带有g修饰的正则表达式)
-        console.log('[实例方法]---replace', 'aaa'.replace('a', 'b'));
-        //'baa'
-        //search和replace都可以使用正则表达式作为参数
+        console.log('[实例方法]---search', 'cat, bat, sat, fat'.search('at')); // 1
+        // replace(regexp | substr, replacement)
+        {
+            // 参数 regexp (RegExp) | substr (String) ：规定要替换的模式的 RegExp 对象| 子字符串
+            // 参数 replacement (String) ：一个字符串值；规定了替换文本或生成替换文本的函数
+            // 返回值 (String) ：一个新的字符串；是用 replacement 替换第一次匹配或所有匹配之后得到的
+            // 用于替换匹配的子字符串，一般情况下只替换第一个匹配(除非使用带有g修饰的正则表达式) 
+            console.log('[replace]---第一次匹配', 'aaa'.replace('a', 'b')); // baa
+            console.log('[replace]---全局匹配', 'aaa'.replace(/a/g, 'b')); // bbb
+        }
     }
-    //4.12---String.protoytpe.split()
+    // 4.12 --- String.protoytpe.split(separator， howmany = str.length)
     {
-        //按照给定规则分割字符串，返回一个由分割出来的子字符串组成的数组
-        console.log('[实例方法]---split', 'a|b|c'.split('|'));
-        //[ 'a', 'b', 'c' ]
-        //如果分割规则为空字符串，则返回数组的成员是原字符串的每一个字符
-        console.log('[实例方法]---split', 'a|b|c'.split(''));
-        //[ 'a', '|', 'b', '|', 'c' ]
-        //如果省略参数，则返回数组的唯一成员就是原字符串
-        console.log('[实例方法]---split', 'a|b|c'.split());
-        // [ 'a|b|c' ]
-        //如果满足分割规则的2个部分紧邻着(即2个分割符中间没有其他字符)，则返回数组之中会有一个空字符串
-        console.log('[实例方法]---split', 'a||c'.split('|'));
-        //[ 'a', '', 'c' ]
-        //如果满足分割规则的部分处于字符串的开头或结尾(即它的前面或后面没有其他字符)，则返回数组的第一个或最后一个成员是一个空字符串
-        console.log('[实例方法]---split', '|b|c'.split('|'));
-        //[ '', 'b', 'c' ]
-        console.log('[实例方法]---split', 'a|b|'.split('|'));
-        //[ 'a', 'b', '' ]
-        //split方法还可以接受第二个参数，限定返回数组的最大成员数
-        console.log('[实例方法]---split', 'a|b|c'.split('|', 0));
-        // []
-        console.log('[实例方法]---split', 'a|b|c'.split('|', 1));
-        //[ 'a' ]
-        console.log('[实例方法]---split', 'a|b|c'.split('|', 2));
-        //[ 'a', 'b' ]
-        console.log('[实例方法]---split', 'a|b|c'.split('|', 3));
-        //[ 'a', 'b', 'c' ]
-        console.log('[实例方法]---split', 'a|b|c'.split('|', 4));
-        //[ 'a', 'b', 'c' ]
-        //split方法还可以使用正则表达式作为参数
+        // 参数 separator (String) ：字符串或正则表达式，从该参数指定的地方分隔字符串
+        // 可选参数 howmany (Number) ：指定返回的数组的最大长度
+        // 返回值 [String] ：一个字符串数组，该数组是通过 separator 指定的边界处将字符串分隔成子串创建的，返回的数组中子串不包括 separator 本身
+        console.log('[实例方法]---split', 'a|b|c'.split('|')); // [ 'a', 'b', 'c' ]
+        // 如果分割规则为空字符串，则返回数组的成员是原字符串的每一个字符
+        console.log('[实例方法]---split', 'a|b|c'.split('')); // [ 'a', '|', 'b', '|', 'c' ]
+        // 如果省略参数，则返回数组的唯一成员就是原字符串
+        console.log('[实例方法]---split', 'a|b|c'.split()); // [ 'a|b|c' ]
+        // 如果满足分割规则的 2 个部分紧邻着(即 2 个分割符中间没有其他字符)，则返回数组之中会有一个空字符串
+        console.log('[实例方法]---split', 'a||c'.split('|')); // [ 'a', '', 'c' ]
+        // 如果满足分割规则的部分处于字符串的开头或结尾(即它的前面或后面没有其他字符)，则返回数组的第一个或最后一个成员是一个空字符串
+        console.log('[实例方法]---split', '|b|c'.split('|')); // [ '', 'b', 'c' ]
+        console.log('[实例方法]---split', 'a|b|'.split('|')); // [ 'a', 'b', '' ]
+        // split 方法还可以接受第二个参数，限定返回数组的最大成员数
+        console.log('[实例方法]---split', 'a|b|c'.split('|', 0)); // []
+        console.log('[实例方法]---split', 'a|b|c'.split('|', 1)); // [ 'a' ]
+        console.log('[实例方法]---split', 'a|b|c'.split('|', 2)); // [ 'a', 'b' ]
+        console.log('[实例方法]---split', 'a|b|c'.split('|', 3)); // [ 'a', 'b', 'c' ]
+        console.log('[实例方法]---split', 'a|b|c'.split('|', 4)); // [ 'a', 'b', 'c' ]
     }
     //4.13---String.prototype.localeCompare()
     {
