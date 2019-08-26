@@ -1,92 +1,78 @@
-//---JSON对象
+// JSON对象
 
-//1---JSON格式
+// 1 --- JSON 格式
 {
-    //JSON格式(JavaScript Object Notation的缩写)：是一种用于数据交换的文本格式
-    //相比于XML格式，JSON格式有2个显著的优点：
-    //书写简单，一目了然
-    //符合JavaScript原生语法，可以由解释引擎直接处理，不用另外添加解析代码
-    //每个JSON对象就是一个值，可能是一个数组或对象，也可能是一个原始类型的值；总之，只能是一个值，不能是2个或更多的值
-    //JSON对值的类型和格式有严格的规定：
+    // JSON格式 ( JavaScript Object Notation 的缩写 )：是一种用于数据交换的文本格式
+    // 相比于 XML 格式， JSON 格式有 2 个显著的优点：
+    // 书写简单，一目了然
+    // 符合 JavaScript 原生语法，可以由解释引擎直接处理，不用另外添加解析代码
+    // 每个 JSON 对象就是一个值，可能是一个数组或对象，也可能是一个原始类型的值；总之，只能是一个值，不能是 2 个或更多的值
+    // JSON 对值的类型和格式有严格的规定：
     {
-        //1：复合类型的值只能是数组或对象，不能是函数、正则表达式对象、日期对象
-        //2：原始类型的值只有四种：字符串、数值(必须以十进制表示)、布尔值、null；不能使用NaN、Infinity、-Infinity、undefined
-        //3：字符串必须使用双引号表示，不能使用单引号
-        //4：对象的键名必须放在双引号里面
-        //5：数组或对象最后一个成员不能加逗号
+        // 1 ：复合类型的值只能是数组或对象，不能是函数、正则表达式对象、日期对象
+        // 2 ：原始类型的值只有四种：字符串、数值(必须以十进制表示)、布尔值、 null ；不能使用 NaN 、 Infinity 、 -Infinity 、 undefined
+        // 3 ：字符串必须使用双引号表示，不能使用单引号
+        // 4 ：对象的键名必须放在双引号里面
+        // 5 ：数组或对象最后一个成员不能加逗号
     }
-    //以下都是合法的JSON
+    //以下都是合法的 JSON
     var arr = ["one", "two", "three"];
     var obj = {
         "one": 1,
         "two": 2,
         "three": 3
     };
-    //注意：null、[]、{}都是合法的JSON值
+    // 注意： null 、 [] 、 {} 都是合法的 JSON 值
 }
 
-//2---JSON对象
+// 2 --- JSON 对象
 {
-    //JSON对象：是JavaScript的原生对象，用来处理JSON格式数据
-    //有2个静态方法：JSON.stringify()、JSON.parse()
+    // JSON 对象：是 JavaScript 的原生对象，用来处理 JSON 格式数据
+    // 有 2 个静态方法： JSON.stringify() 、 JSON.parse()
 }
 
-//3---JSON.stringify()
+// 3 --- JSON.stringify()
 {
-    //3.1---基本用法
+    // 3.1 --- 基本用法
     {
-        //用于将一个值转为JSON字符串；该字符串符合JSON格式，并且可以被JSON.parse方法还原
-        //将各种类型的值，转成JSON字符串
+        // 用于将一个值转为 JSON 字符串；该字符串符合 JSON 格式，并且可以被 JSON.parse 方法还原
+        // 将各种类型的值，转成 JSON 字符串
         {
-            console.log('[stringify]---基本用法', JSON.stringify('abc'));
-            //""abc""
-            console.log('[stringify]---基本用法', JSON.stringify(1));
-            //"1"
-            console.log('[stringify]---基本用法', JSON.stringify(false));
-            //"false"
-            console.log('[stringify]---基本用法', JSON.stringify([]));
-            //"[]"
-            console.log('[stringify]---基本用法', JSON.stringify({}));
-            //"{}"
-            console.log('[stringify]---基本用法', JSON.stringify([1, 'false', false]));
-            //'[1,"false",false]'
+            console.log('[stringify]---基本用法', JSON.stringify('abc')); // ""abc""
+            console.log('[stringify]---基本用法', JSON.stringify(1)); // "1"
+            console.log('[stringify]---基本用法', JSON.stringify(false)); // "false"
+            console.log('[stringify]---基本用法', JSON.stringify([])); // "[]"
+            console.log('[stringify]---基本用法', JSON.stringify({})); // "{}"
+            console.log('[stringify]---基本用法', JSON.stringify([1, 'false', false])); // '[1,"false",false]'
             console.log('[stringify]---基本用法', JSON.stringify({
                 name: '张三'
-            }));
-            //'{"name":"张三"}'
+            })); // '{"name":"张三"}'
         }
-        //注意对于原始类型的字符串，转换结果会带双引号
+        // 注意对于原始类型的字符串，转换结果会带双引号
         {
-            console.log('[stringify]---基本用法', JSON.stringify('foo') === 'foo');
-            //false
-            console.log('[stringify]---基本用法', JSON.stringify('foo') === '\"foo\"');
-            //true
-            console.log('[stringify]---基本用法', JSON.stringify(false));
-            //"false"
-            console.log('[stringify]---基本用法', JSON.stringify('false'));
-            //'\"false\"'
+            console.log('[stringify]---基本用法', JSON.stringify('foo') === 'foo'); // false
+            console.log('[stringify]---基本用法', JSON.stringify('foo') === '\"foo\"'); // true
+            console.log('[stringify]---基本用法', JSON.stringify(false)); // "false"
+            console.log('[stringify]---基本用法', JSON.stringify('false')); // '\"false\"'
         }
-        //如果对象的属性是undefined、函数、XML对象，该属性会被JSON.stringify过滤
+        // 如果对象的属性是 undefined 、函数、 XML 对象，该属性会被 JSON.stringify 过滤
         {
             var obj = {
                 a: undefined,
                 b: function () {},
             };
-            console.log('[stringify]---基本用法', JSON.stringify(obj));
-            //'{}'
+            console.log('[stringify]---基本用法', JSON.stringify(obj)); // '{}'
         }
-        //如果数组成员是undefined、函数、XML对象，则这些值被转成null
+        // 如果数组成员是 undefined 、函数、 XML 对象，则这些值被转成 null
         {
             var arr = [undefined, function () {}];
-            console.log('[stringify]---基本用法', JSON.stringify(arr));
-            //'[null,null]'
+            console.log('[stringify]---基本用法', JSON.stringify(arr)); // '[null,null]'
         }
-        //正则对象会被转成空对象
+        // 正则对象会被转成空对象
         {
-            console.log('[stringify]---基本用法', JSON.stringify(/foo/));
-            //'{}'
+            console.log('[stringify]---基本用法', JSON.stringify(/foo/)); // '{}'
         }
-        //JSON.stringify方法会忽略对象的不可遍历的属性
+        // JSON.stringify 方法会忽略对象的不可遍历的属性
         {
             var obj = {};
             Object.defineProperties(obj, {
@@ -99,34 +85,30 @@
                     enumerable: false
                 }
             });
-            console.log('[stringify]---基本用法', JSON.stringify(obj));
-            //'{"foo":1}'
+            console.log('[stringify]---基本用法', JSON.stringify(obj)); // '{"foo":1}'
         }
     }
-    //3.2---第二个参数
+    // 3.2 --- 第二个参数
     {
-        //当第二个参数是数组：指定需要转成字符串的属性
+        // 当第二个参数是数组：指定需要转成字符串的属性
         {
             var obj = {
-                prop_1: 1,
-                prop_2: 2,
-                prop_3: 3
+                prop1: 1,
+                prop2: 2,
+                prop3: 3
             };
-            var selected_properties = ['prop_1', 'prop_2'];
-            console.log('[stringify]---第二个参数 数组', JSON.stringify(obj, selected_properties));
-            //'{"prop_1":1,"prop_2":2}'
-            //这个类似白名单的数组，只对对象的属性有效，对数组无效
-            console.log('[stringify]---第二个参数 数组', JSON.stringify(['0', '1'], ['0']));
-            //'["0","1"]'
+            var selectedProperties = ['prop1', 'prop2'];
+            console.log('[stringify]---第二个参数 数组', JSON.stringify(obj, selectedProperties)); // '{"prop1":1,"prop2":2}'
+            // 这个类似白名单的数组，只对对象的属性有效，对数组无效
+            console.log('[stringify]---第二个参数 数组', JSON.stringify(['0', '1'], ['0'])); // '["0","1"]'
             console.log('[stringify]---第二个参数 数组', JSON.stringify({
                 '0': 0,
                 '1': 1
-            }, ['0']));
-            //'{"0":0}'
+            }, ['0'])); // '{"0":0}'
         }
-        //当第二个参数是函数：用来更改JSON.stringify的返回值
+        // 当第二个参数是函数：用来更改 JSON.stringify 的返回值
         {
-            //该函数接受2个参数：被转换的对象的键名和键值
+            // 该函数接受 2 个参数：被转换的对象的键名和键值
             console.log('[stringify]---第二个参数 函数', JSON.stringify({
                 a: 1,
                 b: 2

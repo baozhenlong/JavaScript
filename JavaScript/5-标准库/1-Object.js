@@ -97,31 +97,31 @@
     console.log('[Object构造函数---]', obj instanceof Number); //true
 }
 
-//4---Object的静态方法
-//静态方法：指部署在Object对象自身的方法
+// 4 --- Object 的静态方法
+// 静态方法：指部署在 Object 对象自身的方法
 {
-    //4.1---Object.keys()和Object.getOwnPropertyNames()
+    // 4.1 --- Object.keys() 和 Object.getOwnPropertyNames()
     {
-        //Object.keys()和Object.getOwnPropertyNames()：用来遍历对象的属性
-        //Object.keys方法的参数是一个对象，返回一个数组；该包含了该对象自身的(而不是继承的)所有属性名
+        // Object.keys() 和 Object.getOwnPropertyNames() ：用来遍历对象的属性
+        // Object.keys 方法的参数是一个对象，返回一个数组；该包含了该对象自身的(而不是继承的)所有属性名
         var obj = {
             p_1: 123,
             p_2: 456
         };
         console.log('[Object的静态方法]---', Object.keys(obj)); //[ 'p_1', 'p_2' ]
-        //Object.getOwnPropertyNames()方法的参数是一个对象，返回一个数组，包含了该对象自身的所有属性名
+        // Object.getOwnPropertyNames() 方法的参数是一个对象，返回一个数组，包含了该对象自身的所有属性名
         console.log('[Object的静态方法]---', Object.getOwnPropertyNames(obj)); //[ 'p_1', 'p_2' ]
-        //区别：
+        // 区别：
         var arr = ['hello', 'world'];
-        //Object.keys()：只返回可枚举的属性名
+        // Object.keys() ：只返回可枚举的属性名
         console.log('[Object的静态方法]---', Object.keys(arr)); //[ '0', '1' ]
-        //Object.getOwnPropertyNames()：返回可枚举的属性名 + 不可枚举的属性名
+        // Object.getOwnPropertyNames() ：返回可枚举的属性名 + 不可枚举的属性名
         console.log('[Object的静态方法]---', Object.getOwnPropertyNames(arr)); //[ '0', '1', 'length' ]
-        //数组的length属性是不可枚举的属性
-        //由于JavaScript没有提供计算对象属性个数的方法，所以可以用这两个方法代替
+        // 数组的length属性是不可枚举的属性
+        // 由于 JavaScript 没有提供计算对象属性个数的方法，所以可以用这两个方法代替
         console.log('[Object的静态方法]---', Object.keys(obj).length); //2
         console.log('[Object的静态方法]---', Object.getOwnPropertyNames(obj).length); //2
-        //一般情况下，几乎总是使用Object.keys方法，遍历数组的属性
+        // 一般情况下，几乎总是使用Object.keys方法，遍历数组的属性
     }
     //4.2---其他方法
     {
@@ -144,6 +144,69 @@
         {
             //Object.create()：该方法可以指定原型对象和属性，返回一个新的对象
             //Object.getPrototypeOf()：获取对象的Prototype对象
+        }
+        // 4.2.4 --- 合并对象
+        {
+            // Object.assign(target, spurce1, ..., sourceN)
+            // 将源对象(source)的所有可枚举自身属性，复制到目标对象(target)
+            // 参数 target ：目标对象
+            // 可选参数 source ：源对象
+            // 返回值 ：目标对象
+            // 只有 target 参数时， 直接返回 target 参数
+            {
+                var target = {
+                    a: 1
+                };
+                console.log('[assign]---only target', Object.assign(target)); // { a: 1 }
+            }
+            // 如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性
+            {
+                var target = {
+                    a: 1
+                };
+                var source1 = {
+                    a: 2,
+                    b: {
+                        name: 'bb',
+                        value: 11
+                    }
+                };
+                var source2 = {
+                    a: 3
+                };
+                console.log('[assign]---同名属性', Object.assign(target, source1, source2)); // { a: 3, b: { name: 'bb', value: 11 } }
+            }
+            // 实行的是浅拷贝；如果源对象的某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用
+            {
+                // 对于这种嵌套对象，一旦遇到同名属性，处理方法是替换
+                var target = {
+                    a: 0
+                };
+                var source1 = {
+                    a: {
+                        name: 'a1',
+                        value: 1
+                    }
+                };
+                var source2 = {
+                    a: {
+                        name: 'a2',
+                        value: 2
+                    }
+                };
+                var value = Object.assign(target, source1, source2);
+                console.log('[assign]---浅拷贝 value', value); // { a: { name: 'a2', value: 2 } }
+                source1.a = 10;
+                console.log('[assign]---浅拷贝 value', value); // { a: { name: 'a2', value: 2 } }
+                value.a.value = 22;
+                console.log('[assign]---浅拷贝 source2', source2); // { a: { name: 'a2', value: 22 } }
+                source2.a.value = 222;
+                console.log('[assign]---浅拷贝 value', value); // { a: { name: 'a2', value: 222 } }
+                source2 = {};
+                console.log('[assign]---浅拷贝 value', value); // { a: { name: 'a2', value: 222 } }
+                value.a.value = 22;
+                console.log('[assign]---浅拷贝 source2', source2); // {}
+            }
         }
     }
 }
