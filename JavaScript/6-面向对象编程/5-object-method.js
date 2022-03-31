@@ -1,4 +1,4 @@
-//---Object对象的相关方法
+//---Object 对象的相关方法
 
 //1---Object.getPrototypeOf()
 {
