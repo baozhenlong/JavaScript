@@ -7,3 +7,4 @@
 + [语法专题](./doc/grammar-topic.md)
 + [标准库](./doc/stdlib.md)
 + [面向对象编程](./doc/oop.md)
++ [异步操作](./doc//async.md)
