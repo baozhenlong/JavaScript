@@ -14,10 +14,13 @@
 ## ES6
 
 + [块级作用域](./doc/ES6/block-scope.md)
-+ [函数](./doc/ES6/function.md)
++ [函数](./doc/ES6/function.md
 + [扩展对象的功能性](./doc/ES6/extend-object.md)
 + [解构](./doc/ES6/deconstruction.md)
 + [Set 和 Map](./doc/ES6/set-map.md)
 + [迭代器和生成器](./doc/ES6/iterator-generator.md)
 + [类](./doc/ES6/class.md)
 + [改进的数组功能](./doc/ES6/array.md)
++ [Promise 对象](./doc//ES6/promise.md)
++ [Module 语法](./doc/ES6/module-grammar.md)
++ [Module 的加载实现](./doc/ES6/module-loading-implementation.md)

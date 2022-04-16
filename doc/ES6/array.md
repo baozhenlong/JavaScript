@@ -1,4 +1,4 @@
-# [改进的数组功能](./../xmind/../../xmind/ES6.xmind)
+# [改进的数组功能](../../xmind/ES6.xmind)
 
 + 创建数组
   + Array.of()
@@ -7,3 +7,5 @@
   + find() findIndex()
   + fill()
   + copyWithin()
+
+[返回目录](../../README.md)
