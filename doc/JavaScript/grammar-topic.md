@@ -1,4 +1,4 @@
-# [语法专题](./../xmind/JavaScript.xmind)
+# [语法专题](../../xmind/JavaScript.xmind)
 
 + 数据类型的转换
 + 错误处理机制

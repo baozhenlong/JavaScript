@@ -1,4 +1,4 @@
-# [Set 和 Map](./../xmind/../../xmind/ES6.xmind)
+# [Set 和 Map](../../xmind/ES6.xmind)
 
 + Set
 + Map

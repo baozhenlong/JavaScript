@@ -1,4 +1,4 @@
-# [面向对象编程](./../xmind/JavaScript.xmind)
+# [面向对象编程](../../xmind/JavaScript.xmind)
 
 + 实例对象与 new 命令
 + this 关键字

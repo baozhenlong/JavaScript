@@ -1,4 +1,4 @@
-# [Promise 对象](./../xmind/../../xmind/ES6.xmind)
+# [Promise 对象](../../xmind/ES6.xmind)
 
 + 含义
 + 基本用法

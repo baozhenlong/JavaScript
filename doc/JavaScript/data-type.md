@@ -1,4 +1,4 @@
-# [数据类型](./../xmind/JavaScript.xmind)
+# [数据类型](../../xmind/JavaScript.xmind)
 
 + 概述
 + 字面量

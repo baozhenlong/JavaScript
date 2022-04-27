@@ -1,4 +1,4 @@
-# [类](./../xmind/../../xmind/ES6.xmind)
+# [类](../../xmind/ES6.xmind)
 
 + es5 中的近类结构
 + 类的声明

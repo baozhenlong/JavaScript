@@ -1,4 +1,4 @@
-# [运算符](./../xmind/JavaScript.xmind)
+# [运算符](../../xmind/JavaScript.xmind)
 
 + 算术运算符
 + 比较运算符

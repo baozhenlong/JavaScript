@@ -1,4 +1,4 @@
-# [基本语法](./../xmind/JavaScript.xmind)
+# [基本语法](../../xmind/JavaScript.xmind)
 
 + 语句
 + 变量

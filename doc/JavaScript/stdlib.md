@@ -1,4 +1,4 @@
-# [标准库](./../xmind/JavaScript.xmind)
+# [标准库](../../xmind/JavaScript.xmind)
 
 + Object 对象
 + 属性描述对象
